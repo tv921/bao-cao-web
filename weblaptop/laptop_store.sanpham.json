@@ -1,0 +1,33 @@
+[{
+  "_id": {
+    "$oid": "675b9d9747f11cfa0879f46d"
+  },
+  "ten_san_pham": "Laptop Dell XPS 13",
+  "gia": 15000000,
+  "mo_ta": "Laptop Dell XPS 13 voi man hinh 13 inch, chip Intel Core i7, RAM 16GB.",
+  "hinh_anh": "https://example.com/images/dell-xps-13.jpg",
+  "trang_thai": "Còn hàng",
+  "id_danh_muc": {
+    "$oid": "675bc20d6df648478e4756cf"
+  },
+  "id_hang_san_xuat": {
+    "$oid": "675bc4e36df648478e4756e6"
+  }
+},
+{
+  "_id": {
+    "$oid": "675be0f84f74f7ea025cf5ba"
+  },
+  "ten_san_pham": "Điện thoại iPhone 16",
+  "mo_ta": "Điện thoại thông minh iPhone 15, màn hình OLED, camera 48MP.",
+  "gia": 24990000,
+  "hinh_anh": "https://example.com/images/iphone15.jpg",
+  "trang_thai": "Còn hàng",
+  "id_danh_muc": {
+    "$oid": "675bc20d6df648478e4756cf"
+  },
+  "id_hang_san_xuat": {
+    "$oid": "675bc4e36df648478e4756e6"
+  },
+  "__v": 0
+}]

@@ -1,0 +1,89 @@
+1. Danh mục sản phẩm (Categories)
+Tên collection: categories
+{
+  "_id": ObjectId,
+  "ten_danh_muc": String,
+  "mo_ta": String,
+}
+2. Sản phẩm (Products)
+Tên collection: products
+{
+  "_id": ObjectId,
+  "ten_san_pham": String,
+  "mo_ta": String,
+  "gia": Number,
+  "hinh_anh": String,
+  "id_danh_muc": ObjectId,
+  "id_hang_san_xuat": ObjectId,
+  "danh_sach_hinh_anh": {
+    type: [String],
+  }
+}
+3. Hãng sản xuất (Manufacturers)
+Tên collection: manufacturers
+{
+  "_id": ObjectId,
+  "ten_hang": String,
+  "mo_ta": String,
+}
+4. Người dùng (Users)
+Tên collection: users
+{
+  "_id": ObjectId,
+  "ten_dang_nhap": String,
+  "mat_khau": String,
+  "email": String,
+  "sdt": String,
+  "dia_chi": String,
+  "ngay_dang_ky": Date,
+  role: {              
+    type: String,              
+    enum: ["user", "admin"],
+    default: "user"            
+  } 
+}
+5. Giỏ hàng (Cart)
+{
+  "_id": ObjectId,
+  "id_nguoi_dung": ObjectId,
+  "san_pham": [
+    {
+      "id_san_pham": ObjectId,
+      "so_luong": Number
+    }
+  ],
+  "tong_tien": Number,
+  "ngay_cap_nhat": Date
+}
+6. Đơn hàng (Orders)
+Tên collection: orders
+{
+  "_id": ObjectId,
+  "id_nguoi_dung": ObjectId,
+  "san_pham": [
+    {
+      "id_san_pham": ObjectId,
+      "so_luong": Number,
+      "gia": Number
+    }
+  ],
+  "tong_tien": Number,
+  "trang_thai": String, // (Đang xử lý, Đã giao, Hủy)
+  "ngay_dat_hang": Date,
+  "ghi_chu": String
+}
+7. Đánh giá (Reviews)
+Tên collection: reviews
+{
+  "_id": ObjectId,
+  "id_san_pham": ObjectId,
+  "id_nguoi_dung": ObjectId,
+  "so_sao": Number,
+  "binh_luan": String,
+  "ngay_danh_gia": Date
+}
+Quan hệ giữa các collections:
+products liên kết với categories qua id_danh_muc.
+products liên kết với manufacturers qua id_hang_san_xuat.
+carts và orders liên kết với users qua id_nguoi_dung.
+reviews liên kết với products và users qua id_san_pham và id_nguoi_dung.
