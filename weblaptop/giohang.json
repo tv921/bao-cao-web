@@ -1,0 +1,12 @@
+[
+    {
+  "id_nguoi_dung": "644f1b2ae32c123456789abb",
+  "san_pham": [
+    {
+      "id_san_pham": "644f1b2ae32c123456789def",
+      "so_luong": 2
+    }
+  ],
+  "tong_tien": 100000
+}
+]
