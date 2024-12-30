@@ -38,7 +38,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white text-black shadow-md">
+    <nav className="bg-gray-200 text-black shadow-md">
       <div className="container mx-auto flex items-center justify-between py-4 px-6">
         {/* Logo */}
         <div className="text-3xl font-extrabold">
@@ -46,13 +46,20 @@ const Navbar = () => {
             Website bán laptop
           </Link>
         </div>
-
+  
+        {/* Hotline */}
+        <div className="hidden lg:flex items-center space-x-4 text-lg font-medium text-red-600">
+          <i className="fas fa-phone-alt"></i>
+          <span>Hotline: </span>
+          <span className="font-bold">0123456789</span>
+        </div>
+  
         {/* Menu */}
         <ul className="flex space-x-6 items-center">
           {/* Danh mục sản phẩm (Dropdown) */}
           <li className="relative" ref={dropdownRef}>
             <button
-              onClick={toggleDropdown} // Kích hoạt hàm toggleDropdown khi nhấn
+              onClick={toggleDropdown}
               className="text-black bg-blue-300 py-2 px-4 rounded-lg hover:bg-blue-300 transition-all duration-300"
             >
               Danh mục sản phẩm
@@ -80,7 +87,7 @@ const Navbar = () => {
               </li>
             </ul>
           </li>
-
+  
           {/* Thanh tìm kiếm (Search Bar) */}
           <li className="flex items-center">
             <form onSubmit={handleSearchSubmit} className="flex">
@@ -99,22 +106,20 @@ const Navbar = () => {
               </button>
             </form>
           </li>
-
-        {/* Giỏ hàng (Shopping Cart) */}
-        <li className="relative">
-          <Link to="/cart">
-            <button className="relative text-white bg-indigo-500 py-2 px-4 rounded-lg hover:bg-gray-200 transition-all duration-300 flex items-center">
-              <i className="fas fa-shopping-cart text-xl text-black mr-2"></i> {/* Icon giỏ hàng màu đen */}
-              <span>Giỏ hàng</span> {/* Thêm chữ "Giỏ hàng" */}
-              <span className="absolute top-0 right-0 text-xs bg-red-600 text-white rounded-full px-1">
-                3 {/* Ví dụ số lượng giỏ hàng */}
-              </span>
-            </button>
-          </Link>
-        </li>
-
-
-
+  
+          {/* Giỏ hàng (Shopping Cart) */}
+          <li className="relative">
+            <Link to="/cart">
+              <button className="relative text-white bg-indigo-500 py-2 px-4 rounded-lg hover:bg-gray-200 transition-all duration-300 flex items-center">
+                <i className="fas fa-shopping-cart text-xl text-black mr-2"></i>
+                <span>Giỏ hàng</span>
+                <span className="absolute top-0 right-0 text-xs bg-red-600 text-white rounded-full px-1">
+                  3
+                </span>
+              </button>
+            </Link>
+          </li>
+  
           {/* Đăng nhập */}
           <li>
             <Link to="/login">
@@ -123,7 +128,7 @@ const Navbar = () => {
               </button>
             </Link>
           </li>
-
+  
           {/* Đăng ký */}
           <li>
             <Link to="/register">
@@ -135,7 +140,7 @@ const Navbar = () => {
         </ul>
       </div>
     </nav>
-  );
+  ); 
 };
 
 export default Navbar;

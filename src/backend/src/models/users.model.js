@@ -20,6 +20,11 @@ const userSchema = new mongoose.Schema({
   dia_chi: {
     type: String,
   },
+   role: {
+    type: String,
+    enum: ["user", "admin"],
+    default: "user",
+  },
 });
 
 module.exports = mongoose.model("User", userSchema);

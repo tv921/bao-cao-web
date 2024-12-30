@@ -8,9 +8,9 @@ import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 const Slider = () => {
   // Dữ liệu ảnh laptop
   const laptopImages = [
-    { image: '/img/img1.png' },
-    { image: '/img/img2.png' },
-    { image: '/img/img3.png' },
+    { image: '/img/img1.webp' },
+    { image: '/img/img2.webp' },
+    { image: '/img/img3.webp' },
   ];
 
   console.log(laptopImages);  // Kiểm tra xem mảng có được định nghĩa đúng không
@@ -25,14 +25,14 @@ const Slider = () => {
       spaceBetween={30}           // Khoảng cách giữa các slide
       centeredSlides={true}      // Đặt slide hiện tại vào giữa
       speed={600}                // Tốc độ chuyển slide
-      className="max-w-7xl mx-auto my-8 px-4"
+      className="max-w-6xl mx-auto my-8 px-4"
     >
       {laptopImages.map((laptop, index) => (
         <SwiperSlide key={index} className="flex justify-center">
           <img
             src={laptop.image}
             alt={`Laptop ${index + 1}`}
-            className="w-full h-64 object-cover"  // Điều chỉnh kích thước ảnh
+            className="w-full h-auto object-cover"  // Điều chỉnh kích thước ảnh
           />
         </SwiperSlide>
       ))}

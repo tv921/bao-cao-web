@@ -1,8 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import '../css/index.css';
-
-import Navbar from '../components/Navbar';
 import Slider from '../components/Slider';
 
 function Home() {
