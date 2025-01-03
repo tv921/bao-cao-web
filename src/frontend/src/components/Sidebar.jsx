@@ -41,13 +41,7 @@ const Sidebar = () => {
             <FaBox className="h-5 w-5 mr-2" />
             Quản lí hãng sản xuất
           </li>
-        </Link>
-         <Link to="/them-danhmuc"> 
-          <li className="flex items-center px-4 py-2 text-2xl font-semibold rounded-lg shadow-md hover:bg-gray-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-500">
-            <FaBox className="h-5 w-5 mr-2" />
-            Thêm danh mục
-          </li>
-        </Link>
+        </Link> 
       </ul>
     </div>
   );
