@@ -1,12 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const productRoutes = require("./src/routes/product.routes");
-const categoryRoutes = require("./src/routes/categories.routes");
-const manufacturerRoutes = require("./src/routes/manufacturers.routes");
-const userRoutes = require("./src/routes/users.routes"); // Nhập khẩu đúng route user
-const cartRoutes = require('./src/routes/cart.routes');
-const orderRoutes = require('./src/routes/order.routes');
-const reviewRoutes = require('./src/routes/review.routes');
+const path = require('path');
+const productRoutes = require("./routes/product.routes");
+const categoryRoutes = require("./routes/categories.routes");
+const manufacturerRoutes = require("./routes/manufacturers.routes");
+const userRoutes = require("./routes/users.routes"); // Nhập khẩu đúng route user
+const cartRoutes = require('./routes/cart.routes');
+const orderRoutes = require('./routes/order.routes');
+const reviewRoutes = require('./routes/review.routes');
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
@@ -15,7 +16,7 @@ const app = express();
 // Middleware
 app.use(cors()); // Cho phép tất cả các nguồn yêu cầu
 app.use(bodyParser.json()); // Phân tích dữ liệu JSON trong yêu cầu
-
+app.use('/images', express.static(path.join(__dirname, '../../frontend/public/images'))); // Cung cấp quyền truy cập vào thư mục 'public/images'
 // Chuỗi kết nối MongoDB
 const mongoUri = "mongodb://localhost:27017/laptop_store"; // Thay "laptop_store" bằng tên cơ sở dữ liệu của bạn
 

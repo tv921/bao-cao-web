@@ -72,17 +72,17 @@ const Navbar = () => {
             >
               <li>
                 <Link to="/laptop" className="block px-4 py-2 hover:bg-gray-100 rounded-lg">
-                  Laptop
+                  Laptop văn phòng
                 </Link>
               </li>
               <li>
                 <Link to="/accessories" className="block px-4 py-2 hover:bg-gray-100 rounded-lg">
-                  Phụ kiện
+                  Laptop gaming
                 </Link>
               </li>
               <li>
                 <Link to="/components" className="block px-4 py-2 hover:bg-gray-100 rounded-lg">
-                  Linh kiện
+                  Laptop mỏng nhẹ
                 </Link>
               </li>
             </ul>

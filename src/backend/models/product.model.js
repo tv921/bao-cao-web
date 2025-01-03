@@ -6,7 +6,7 @@ const productSchema = new Schema({
   mo_ta: { type: String, required: true },
   gia: { type: Number, required: true },
   hinh_anh: { type: String },
-  trang_thai: { type: String, required: true },
+  trang_thai: { type: String },
   id_danh_muc: { type: Schema.Types.ObjectId, ref: 'Category' }, // Liên kết với danh mục
   id_hang_san_xuat: { type: Schema.Types.ObjectId, ref: 'Manufacturer' }, // Liên kết với hãng sản xuất
 });

@@ -1,115 +1,131 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const AddProduct = () => {
-  const [categories, setCategories] = useState([]); // Danh sách danh mục
-  const [manufacturers, setManufacturers] = useState([]); // Danh sách hãng sản xuất
+  const [categories, setCategories] = useState([]);
+  const [manufacturers, setManufacturers] = useState([]);
   const [formData, setFormData] = useState({
-    name: '',
-    description: '',
+    name: "",
+    description: "",
     price: 0,
-    categoryId: '',
-    manufacturerId: '',
-    hinh_anh: null, // Khởi tạo trường hình ảnh là null
+    categoryId: "",
+    manufacturerId: "",
+    hinh_anh: null,
   });
   const [imagePreview, setImagePreview] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  // Lấy danh mục và hãng sản xuất khi component mount
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/categories');
-        if (Array.isArray(response.data)) {
-          setCategories(response.data);
-        } else {
-          console.error('Dữ liệu categories không phải là mảng', response.data);
-        }
+        const response = await axios.get("http://localhost:5000/api/categories");
+        setCategories(response.data);
       } catch (error) {
-        console.error('Error fetching categories:', error);
+        console.error("Error fetching categories:", error);
       }
     };
 
     const fetchManufacturers = async () => {
       try {
         const response = await axios.get('http://localhost:5000/api/manufacturers');
-        if (Array.isArray(response.data)) {
+        console.log('Manufacturers data:', response.data); // Thêm log để kiểm tra
+        if (Array.isArray(response.data) && response.data.length > 0) {
           setManufacturers(response.data);
         } else {
-          console.error('Dữ liệu manufacturers không phải là mảng', response.data);
+          console.error('API trả về dữ liệu không hợp lệ hoặc không có dữ liệu:', response.data);
+          setManufacturers([]); // Đặt mảng rỗng để tránh lỗi
         }
       } catch (error) {
         console.error('Error fetching manufacturers:', error);
+        alert('Không thể tải danh sách hãng sản xuất. Vui lòng kiểm tra lại.');
       }
     };
+    
 
     fetchCategories();
     fetchManufacturers();
   }, []);
 
-  // Xử lý thay đổi dữ liệu trong form
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
+    setFormData((prev) => ({
+      ...prev,
       [name]: value,
     }));
   };
 
-  // Xử lý thay đổi file hình ảnh
   const handleFileChange = (e) => {
-    const file = e.target.files ? e.target.files[0] : null;
+    const file = e.target.files?.[0];
     if (file) {
-      setFormData((prevData) => ({
-        ...prevData,
+      setFormData((prev) => ({
+        ...prev,
         hinh_anh: file,
       }));
 
-      // Tạo preview cho ảnh
       const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
+      reader.onloadend = () => setImagePreview(reader.result);
       reader.readAsDataURL(file);
     }
   };
 
-  // Xử lý submit form
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const formDataToSend = new FormData();
-    formDataToSend.append('name', formData.name);
-    formDataToSend.append('description', formData.description);
-    formDataToSend.append('price', formData.price.toString());
-    formDataToSend.append('categoryId', formData.categoryId);
-    formDataToSend.append('manufacturerId', formData.manufacturerId);
-    if (formData.hinh_anh) {
-      formDataToSend.append('hinh_anh', formData.hinh_anh);
+  
+    // Kiểm tra các trường bắt buộc
+    if (!formData.name || !formData.price || !formData.categoryId || !formData.manufacturerId) {
+      alert("Vui lòng điền đầy đủ thông tin.");
+      return;
     }
-
+  
+    // Chuẩn bị FormData để gửi
+    const dataToSend = new FormData();
+    dataToSend.append("ten_san_pham", formData.name);
+    dataToSend.append("mo_ta", formData.description);
+    dataToSend.append("gia", formData.price.toString());
+    dataToSend.append("id_danh_muc", formData.categoryId);
+    dataToSend.append("id_hang_san_xuat", formData.manufacturerId);
+  
+    // Chỉ thêm file nếu có
+    if (formData.hinh_anh) {
+      dataToSend.append("hinh_anh", formData.hinh_anh);
+    }
+  
     try {
-      const response = await axios.post('http://localhost:5000/api/products', formDataToSend, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+      setLoading(true);
+  
+      // Gửi dữ liệu tới server
+      const response = await axios.post("http://localhost:5000/api/products", dataToSend, {
+        headers: { "Content-Type": "multipart/form-data" },
       });
-      alert('Sản phẩm đã được thêm thành công!');
-      console.log('Sản phẩm đã được thêm:', response.data);
+  
+      // Lấy URL ảnh từ phản hồi
+      const { hinh_anh_url } = response.data;
+  
+      alert("Sản phẩm đã được thêm thành công!");
+      console.log("Dữ liệu trả về:", response.data);
+  
+      // Đặt lại form về trạng thái ban đầu
+      setFormData({
+        name: "",
+        description: "",
+        price: 0,
+        categoryId: "",
+        manufacturerId: "",
+        hinh_anh: null,
+      });
+      setImagePreview(hinh_anh_url || null); // Hiển thị lại ảnh đã tải lên (nếu cần)
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.error('Error adding product:', error.response?.data || error.message);
-      } else {
-        console.error('Unknown error:', error);
-      }
-      alert('Lỗi khi thêm sản phẩm');
+      console.error("Lỗi khi thêm sản phẩm:", error.response?.data || error.message);
+      alert("Thêm sản phẩm thất bại. Vui lòng thử lại.");
+    } finally {
+      setLoading(false);
     }
   };
-
+  
   return (
     <div className="container mx-auto p-4">
       <h2 className="text-2xl font-bold mb-4">Thêm Sản Phẩm</h2>
       <form onSubmit={handleSubmit} className="space-y-4" encType="multipart/form-data">
-        {/* Tên sản phẩm */}
         <div>
           <label className="block text-sm font-medium">Tên sản phẩm</label>
           <input
@@ -121,8 +137,6 @@ const AddProduct = () => {
             required
           />
         </div>
-
-        {/* Mô tả sản phẩm */}
         <div>
           <label className="block text-sm font-medium">Mô tả</label>
           <textarea
@@ -134,8 +148,6 @@ const AddProduct = () => {
             required
           />
         </div>
-
-        {/* Giá sản phẩm */}
         <div>
           <label className="block text-sm font-medium">Giá</label>
           <input
@@ -147,8 +159,6 @@ const AddProduct = () => {
             required
           />
         </div>
-
-        {/* Danh mục */}
         <div>
           <label className="block text-sm font-medium">Danh mục</label>
           <select
@@ -159,15 +169,13 @@ const AddProduct = () => {
             required
           >
             <option value="">Chọn danh mục</option>
-            {categories.map((category) => (
-              <option key={category._id} value={category._id}>
-                {category.ten_danh_muc}
+            {categories.map((cat) => (
+              <option key={cat._id} value={cat._id}>
+                {cat.ten_danh_muc}
               </option>
             ))}
           </select>
         </div>
-
-        {/* Hãng sản xuất */}
         <div>
           <label className="block text-sm font-medium">Hãng sản xuất</label>
           <select
@@ -178,15 +186,13 @@ const AddProduct = () => {
             required
           >
             <option value="">Chọn hãng sản xuất</option>
-            {manufacturers.map((manufacturer) => (
-              <option key={manufacturer._id} value={manufacturer._id}>
-                {manufacturer.ten_hang}
+            {manufacturers.map((manu) => (
+              <option key={manu._id} value={manu._id}>
+                {manu.ten_hang_san_xuat}
               </option>
             ))}
           </select>
         </div>
-
-        {/* Hình ảnh sản phẩm */}
         <div>
           <label className="block text-sm font-medium">Hình ảnh</label>
           <input
@@ -196,13 +202,11 @@ const AddProduct = () => {
             className="mt-1 p-2 border border-gray-300 rounded w-full"
             accept="image/*"
           />
-          {imagePreview && <img src={imagePreview} alt="Image Preview" className="mt-2 w-32 h-32 object-cover" />}
+          {imagePreview && <img src={imagePreview} alt="Preview" className="mt-2 w-32 h-32 object-cover" />}
         </div>
-
-        {/* Nút thêm sản phẩm */}
         <div>
-          <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">
-            Thêm sản phẩm
+          <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded" disabled={loading}>
+            {loading ? "Đang xử lý..." : "Thêm sản phẩm"}
           </button>
         </div>
       </form>

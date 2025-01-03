@@ -6,7 +6,9 @@ function Home() {
     <>
      <Slider></Slider>
     <h1>Trang chủ</h1>
-    <h2>Sản phẩm nổi bật</h2>
+    <h2>Laptop văn phòng</h2>
+    <h2>Laptop gaming</h2>
+    <h2>Laptop mỏng nhẹ</h2>
     </>
   );
 }

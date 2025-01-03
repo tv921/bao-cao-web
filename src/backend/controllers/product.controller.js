@@ -19,44 +19,51 @@ const getAllProducts = async (req, res) => {
   }
 };
 
-// API thêm sản phẩm
+// Trong controller addProduct
 const addProduct = async (req, res) => {
-  const { ten_san_pham, mo_ta, gia, hinh_anh, id_danh_muc, id_hang_san_xuat, trang_thai } = req.body;
-  
   try {
-    // Kiểm tra xem danh mục và hãng sản xuất có tồn tại không
-    const category = await CategoriesModel.findById(id_danh_muc);
-    const manufacturer = await ManufacturersModel.findById(id_hang_san_xuat);
+    const { ten_san_pham, mo_ta, gia, id_danh_muc, id_hang_san_xuat, trang_thai } = req.body;
 
-    if (!category) {
-      return res.status(404).json({ message: 'Danh mục không tồn tại' });
+    // Kiểm tra dữ liệu đầu vào
+    if (!ten_san_pham || !gia || !id_danh_muc || !id_hang_san_xuat) {
+      return res.status(400).json({ message: 'Vui lòng điền đầy đủ thông tin sản phẩm.' });
     }
 
-    if (!manufacturer) {
-      return res.status(404).json({ message: 'Hãng sản xuất không tồn tại' });
+    // Xử lý ảnh
+    let hinh_anh = '';
+    if (req.files && req.files.length > 0) {
+      hinh_anh = '/images/' + req.files[0].filename; // URL ảnh
     }
 
+    // Tạo sản phẩm mới
     const newProduct = new ProductModel({
       ten_san_pham,
       mo_ta,
       gia,
       hinh_anh,
-      id_danh_muc,  // Liên kết với danh mục
-      id_hang_san_xuat,  // Liên kết với hãng sản xuất
       trang_thai,
+      id_danh_muc,
+      id_hang_san_xuat,
     });
 
     const savedProduct = await newProduct.save();
-    res.status(201).json(savedProduct);
+
+    // Trả về thông tin sản phẩm, bao gồm đường dẫn ảnh
+    res.status(201).json({
+      message: 'Sản phẩm đã được thêm thành công!',
+      hinh_anh_url: hinh_anh, // Trả về đường dẫn ảnh
+      product: savedProduct,
+    });
   } catch (error) {
-    res.status(400).json({ message: 'Lỗi khi thêm sản phẩm', error: error.message });
+    res.status(500).json({ message: 'Lỗi khi thêm sản phẩm', error: error.message });
   }
 };
 
 /// API sửa sản phẩm
 const updateProduct = async (req, res) => {
   const { id } = req.params; // Lấy ID từ params
-  const { ten_san_pham, mo_ta, gia, hinh_anh, id_danh_muc, id_hang_san_xuat, trang_thai } = req.body;
+  const { ten_san_pham, mo_ta, gia, id_danh_muc, id_hang_san_xuat } = req.body;
+    const hinh_anh = req.files.find((file) => file.fieldname === 'images')?.path.replace(path.join(__dirname, '../../frontend/public'), '').replace(/\\/g, '/') || '';
 
   try {
     // Tìm và cập nhật sản phẩm theo ID
@@ -67,7 +74,6 @@ const updateProduct = async (req, res) => {
       hinh_anh,
       id_danh_muc,  // Liên kết với danh mục
       id_hang_san_xuat,  // Liên kết với hãng sản xuất
-      trang_thai,
     }, { new: true });  // new: true để trả về sản phẩm sau khi cập nhật
 
     if (!updatedProduct) {
