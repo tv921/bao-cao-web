@@ -1,23 +1,40 @@
-const ProductModel = require('../models/product.model');  // Model sản phẩm
-const CategoriesModel = require('../models/categories.model');  // Model danh mục
-const ManufacturersModel = require('../models/manufacturers.model');  // Model hãng sản xuất
+const ProductModel = require('../models/product.model'); // Model sản phẩm
+const CategoryModel = require('../models/categories.model'); // Model danh mục
+const ManufacturerModel = require('../models/manufacturers.model'); // Model hãng sản xuất
 
 // API lấy tất cả sản phẩm
 const getAllProducts = async (req, res) => {
   try {
     const products = await ProductModel.find()
-      .populate('id_danh_muc') // Liên kết với collection 'danhmuc'
-      .populate('id_hang_san_xuat'); // Liên kết với collection 'hangsanxuat'
 
-    if (products.length === 0) {
+    if (!products || products.length === 0) {
       return res.status(404).json({ message: 'Không tìm thấy sản phẩm' });
     }
 
-    res.json(products);
+    res.status(200).json(products);
   } catch (error) {
     res.status(500).json({ message: 'Lỗi khi lấy sản phẩm', error: error.message });
   }
 };
+
+// API lấy sản phẩm theo danh mục và giới hạn 4 sản phẩm
+const getProductsByCategory = async (req, res) => {
+  try {
+    const { categoryId } = req.params;
+    const products = await ProductModel.find({ id_danh_muc: categoryId })
+      .limit(4); // Giới hạn số lượng sản phẩm trả về là 4
+
+    if (products.length === 0) {
+      return res.status(404).json({ message: 'No products found in this category' });
+    }
+    
+    res.json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 
 // Trong controller addProduct
 const addProduct = async (req, res) => {
@@ -103,4 +120,34 @@ const deleteProduct = async (req, res) => {
   }
 };
 
-module.exports = { getAllProducts, addProduct, updateProduct, deleteProduct };
+const searchProducts = async (req, res) => {
+  try {
+    const { searchTerm } = req.query; // Lấy từ query parameter
+
+    // Kiểm tra nếu searchTerm là chuỗi hợp lệ
+    if (typeof searchTerm !== 'string') {
+      return res.status(400).json({ message: 'Từ khóa tìm kiếm phải là một chuỗi' });
+    }
+
+    // Tạo điều kiện tìm kiếm
+    const searchConditions = {
+      ten_san_pham: { $regex: searchTerm, $options: 'i' } // Tìm kiếm theo tên sản phẩm, không phân biệt chữ hoa chữ thường
+    };
+
+    const products = await ProductModel.find(searchConditions);
+
+    if (products.length === 0) {
+      return res.status(404).json({ message: `Không tìm thấy sản phẩm nào cho từ khóa "${searchTerm}"` });
+    }
+
+    res.json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Lỗi khi tìm kiếm sản phẩm', error: error.message });
+  }
+};
+
+
+
+
+module.exports = { getAllProducts, addProduct, updateProduct, deleteProduct, getProductsByCategory, searchProducts};

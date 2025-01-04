@@ -7,6 +7,8 @@ const {
   addProduct,
   updateProduct,
   deleteProduct,
+  getProductsByCategory,
+  searchProducts
 } = require("../controllers/product.controller");
 const router = express.Router();
 
@@ -23,6 +25,11 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
+
+router.get('/category/:categoryId', getProductsByCategory);
+
+router.get('/search', searchProducts);
+
 /// Lấy tất cả sản phẩm
 router.get("/", getAllProducts);
 

@@ -12,6 +12,7 @@ import ProductList from "./pages/ProductList";
 import ManageCatalog from "./pages/ManageCatalog";
 import ManageManufacturer from "./pages/ManageManufacturer,";
 import CategoryPage from './pages/CategoryPage';
+import SearchResults from './pages/SearchResults'; // Import trang kết quả tìm kiếm
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
               <Route path="/manage-catalog" element={<ManageCatalog />} />
               <Route path="/manage-manufacturer" element={<ManageManufacturer />} />
               <Route path="/manage-category" element={<CategoryPage />} />
+              <Route path="/search" element={<SearchResults />} /> {/* Route kết quả tìm kiếm */}
             </Routes>
           </div>
         </div>

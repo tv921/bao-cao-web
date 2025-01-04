@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Slider from '../components/Slider';
+import ProductList from '../components/ProductList';
 
 function Home() {
-   return (
+  return (
     <>
-     <Slider></Slider>
-    <h1>Trang chủ</h1>
-    <h2>Laptop văn phòng</h2>
-    <h2>Laptop gaming</h2>
-    <h2>Laptop mỏng nhẹ</h2>
+      <Slider />
+      <ProductList categoryId="6777ce2adece28b43c0a3341" title="Học tập văn phòng" />
+      <ProductList categoryId="6777ce79dece28b43c0a3343" title="Laptop gaming" />
+      <ProductList categoryId="677944c470994dccbe87cce5" title="Laptop mỏng nhẹ cao cấp" />
     </>
   );
 }

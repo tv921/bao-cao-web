@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../css/index.css'; 
 
 const Navbar = () => {
   // State để theo dõi dropdown (mở hoặc đóng)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate(); // Hook navigate
+
+
 
   // Reference cho dropdown để kiểm tra click bên ngoài
   const dropdownRef = useRef(null);
@@ -31,10 +34,12 @@ const Navbar = () => {
     setSearchQuery(e.target.value);
   };
 
-  const handleSearchSubmit = (e) => {
+  const handleSearchSubmit = async (e) => {
     e.preventDefault();
-    // Xử lý tìm kiếm tại đây, có thể redirect tới trang tìm kiếm hoặc lọc sản phẩm
-    console.log('Searching for:', searchQuery);
+    if (searchQuery.trim()) {
+      // Điều hướng đến trang tìm kiếm và truyền từ khóa tìm kiếm qua URL
+      navigate(`/search?query=${searchQuery}`);
+    }
   };
 
   return (
