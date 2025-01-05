@@ -11,6 +11,18 @@ const AddProduct = () => {
     categoryId: "",
     manufacturerId: "",
     hinh_anh: null,
+    cau_hinh: {
+      cpu: "",
+      ram: "",
+      o_cung: "",
+      gpu: "",
+      man_hinh: "",
+      pin: "",
+      cong_ket_noi: "",
+      he_dieu_hanh: "",
+      trong_luong: "",
+      kich_thuoc: "",
+    },
   });
   const [imagePreview, setImagePreview] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -28,12 +40,12 @@ const AddProduct = () => {
     const fetchManufacturers = async () => {
       try {
         const response = await axios.get('http://localhost:5000/api/manufacturers');
-        console.log('Manufacturers data:', response.data); // Thêm log để kiểm tra
+        console.log('Manufacturers data:', response.data);
         if (Array.isArray(response.data) && response.data.length > 0) {
           setManufacturers(response.data);
         } else {
           console.error('API trả về dữ liệu không hợp lệ hoặc không có dữ liệu:', response.data);
-          setManufacturers([]); // Đặt mảng rỗng để tránh lỗi
+          setManufacturers([]);
         }
       } catch (error) {
         console.error('Error fetching manufacturers:', error);
@@ -48,10 +60,22 @@ const AddProduct = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+
+    // Kiểm tra nếu là thuộc tính trong cau_hinh
+    if (name in formData.cau_hinh) {
+      setFormData((prev) => ({
+        ...prev,
+        cau_hinh: {
+          ...prev.cau_hinh,
+          [name]: value,
+        },
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   const handleFileChange = (e) => {
@@ -85,6 +109,13 @@ const AddProduct = () => {
     dataToSend.append("id_danh_muc", formData.categoryId);
     dataToSend.append("id_hang_san_xuat", formData.manufacturerId);
   
+    // Thêm các thuộc tính cấu hình vào FormData
+    for (const key in formData.cau_hinh) {
+      if (formData.cau_hinh[key]) {
+        dataToSend.append(`cau_hinh[${key}]`, formData.cau_hinh[key]);
+      }
+    }
+
     // Chỉ thêm file nếu có
     if (formData.hinh_anh) {
       dataToSend.append("hinh_anh", formData.hinh_anh);
@@ -112,6 +143,18 @@ const AddProduct = () => {
         categoryId: "",
         manufacturerId: "",
         hinh_anh: null,
+        cau_hinh: {
+          cpu: "",
+          ram: "",
+          o_cung: "",
+          gpu: "",
+          man_hinh: "",
+          pin: "",
+          cong_ket_noi: "",
+          he_dieu_hanh: "",
+          trong_luong: "",
+          kich_thuoc: "",
+        },
       });
       setImagePreview(hinh_anh_url || null); // Hiển thị lại ảnh đã tải lên (nếu cần)
     } catch (error) {
@@ -192,6 +235,22 @@ const AddProduct = () => {
               </option>
             ))}
           </select>
+        </div>
+        {/* Thêm phần cấu hình sản phẩm */}
+        <div>
+          <h3 className="text-lg font-medium">Cấu hình sản phẩm</h3>
+          {Object.keys(formData.cau_hinh).map((key) => (
+            <div key={key}>
+              <label className="block text-sm font-medium">{key}</label>
+              <input
+                type="text"
+                name={key}
+                value={formData.cau_hinh[key]}
+                onChange={handleChange}
+                className="mt-1 p-2 border border-gray-300 rounded w-full"
+              />
+            </div>
+          ))}
         </div>
         <div>
           <label className="block text-sm font-medium">Hình ảnh</label>

@@ -7,6 +7,6 @@ const categorySchema = new Schema({
 });
 
 // Đảm bảo rằng bạn chỉ định đúng tên collection là 'danhmuc'
-const CategoryModel = mongoose.model('Category', categorySchema, 'danhmuc');
+const CategoryModel = mongoose.model('danhmuc', categorySchema, 'danhmuc');
 
 module.exports = CategoryModel;

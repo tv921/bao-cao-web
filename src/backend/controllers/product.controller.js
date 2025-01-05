@@ -1,7 +1,7 @@
 const ProductModel = require('../models/product.model'); // Model sản phẩm
 const CategoryModel = require('../models/categories.model'); // Model danh mục
 const ManufacturerModel = require('../models/manufacturers.model'); // Model hãng sản xuất
-
+const Product = require("../models/product.model");
 // API lấy tất cả sản phẩm
 const getAllProducts = async (req, res) => {
   try {
@@ -36,10 +36,17 @@ const getProductsByCategory = async (req, res) => {
 };
 
 
-// Trong controller addProduct
 const addProduct = async (req, res) => {
   try {
-    const { ten_san_pham, mo_ta, gia, id_danh_muc, id_hang_san_xuat, trang_thai } = req.body;
+    const { 
+      ten_san_pham, 
+      mo_ta, 
+      gia, 
+      id_danh_muc, 
+      id_hang_san_xuat, 
+      trang_thai, 
+      cau_hinh 
+    } = req.body;
 
     // Kiểm tra dữ liệu đầu vào
     if (!ten_san_pham || !gia || !id_danh_muc || !id_hang_san_xuat) {
@@ -61,6 +68,7 @@ const addProduct = async (req, res) => {
       trang_thai,
       id_danh_muc,
       id_hang_san_xuat,
+      cau_hinh,  // Thêm thông tin cấu hình vào sản phẩm
     });
 
     const savedProduct = await newProduct.save();
@@ -146,8 +154,26 @@ const searchProducts = async (req, res) => {
     res.status(500).json({ message: 'Lỗi khi tìm kiếm sản phẩm', error: error.message });
   }
 };
+// Lấy chi tiết sản phẩm theo ID
+const getProductById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const product = await Product.findById(id)
+      .populate('id_danh_muc', 'ten_danh_muc') // Lấy thông tin danh mục
+      .populate('id_hang_san_xuat', 'ten_hang_san_xuat'); // Lấy thông tin hãng sản xuất
+
+    if (!product) {
+      return res.status(404).json({ message: 'Sản phẩm không tồn tại' });
+    }
+
+    res.status(200).json(product);
+  } catch (error) {
+    res.status(500).json({ message: 'Lỗi server', error: error.message });
+  }
+};
 
 
 
 
-module.exports = { getAllProducts, addProduct, updateProduct, deleteProduct, getProductsByCategory, searchProducts};
+module.exports = { getAllProducts, addProduct, updateProduct, deleteProduct, getProductsByCategory, searchProducts, getProductById};

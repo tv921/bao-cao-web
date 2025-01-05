@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../css/index.css'; 
 
-const Navbar = ({ onLogout }) => {
+const Navbar1 = ({ onLogout }) => {
   // State để theo dõi dropdown (mở hoặc đóng)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -122,20 +122,20 @@ const Navbar = ({ onLogout }) => {
                 </span>
               </button>
             </Link>
-          </li>
-  
-          {/* Đăng nhập */}
+          </li>  
+          {/* Đăng xuat */}
           <li>
-            <Link to="/login">
-              <button className="bg-green-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-green-600 transition-all duration-300">
-                Đăng nhập
-              </button>
-            </Link>
-          </li> 
+            <button
+              onClick={onLogout}
+              className="bg-red-600 text-white py-2 px-4 rounded-lg shadow-md hover:bg-red-700 transition-all duration-300"
+            >
+              Đăng xuất
+            </button>
+          </li>
         </ul>
       </div>
     </nav>
   ); 
 };
 
-export default Navbar;
+export default Navbar1;

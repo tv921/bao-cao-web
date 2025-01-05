@@ -8,7 +8,8 @@ const {
   updateProduct,
   deleteProduct,
   getProductsByCategory,
-  searchProducts
+  searchProducts,
+  getProductById
 } = require("../controllers/product.controller");
 const router = express.Router();
 
@@ -41,5 +42,8 @@ router.put("/:id", updateProduct);
 
 // Xóa sản phẩm theo ID
 router.delete("/:id", deleteProduct);
+
+// Route: Lấy chi tiết sản phẩm theo ID
+router.get('/:id', getProductById);
 
 module.exports = router;

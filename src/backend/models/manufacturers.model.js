@@ -1,12 +1,13 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+// Định nghĩa schema cho hãng sản xuất
 const manufacturerSchema = new Schema({
-  ten_hang_san_xuat: { type: String, required: true },
-  mo_ta: { type: String },
+  ten_hang_san_xuat: { type: String, required: true }, // Tên hãng sản xuất
+  mo_ta: { type: String }, 
 });
 
-// Đảm bảo rằng bạn chỉ định đúng tên collection là 'hangsanxuat'
-const ManufacturerModel = mongoose.model('Manufacturer', manufacturerSchema, 'hangsanxuat');
+// Đăng ký model 'hangsanxuat'
+const ManufacturerModel = mongoose.model('hangsanxuat', manufacturerSchema,'hangsanxuat');
 
 module.exports = ManufacturerModel;
