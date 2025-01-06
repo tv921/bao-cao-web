@@ -5,7 +5,6 @@ import './css/index.css';
 import Home from './pages/Home';
 import Navbar from './components/Navbar';
 import Navbar1 from './components/Navbar1';
-import Cart from './pages/cart';
 import Sidebar from "./components/Sidebar";
 import AddProduct from "./pages/AddProduct";
 import Login from "./pages/Login";
@@ -15,7 +14,8 @@ import ManageCatalog from "./pages/ManageCatalog";
 import ManageManufacturer from './pages/ManageManufacturer';
 import CategoryPage from './pages/CategoryPage';
 import SearchResults from './pages/SearchResults';
-import ProducDetail from './components/ProducDetail';
+import ProducDetail from './pages/ProducDetail';
+import Cart from './pages/cart';
 
 function App() {
   // State để theo dõi trạng thái đăng nhập và vai trò người dùng
@@ -59,7 +59,7 @@ function App() {
 
         {/* Main Content */}
         <div className="flex-1 flex flex-col ml-84">
-          {/* Navbar: Sử dụng Navbar1 cho admin, Navbar cho user */}
+         
           {isLoggedIn ? (
             <Navbar1 onLogout={handleLogout} />
           ) : (

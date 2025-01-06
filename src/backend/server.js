@@ -36,8 +36,7 @@ app.use("/api/manufacturers", manufacturerRoutes);
 app.use("/api/carts", cartRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/reviews", reviewRoutes);
-// Sử dụng route cho sản phẩm
-// app.use('/api/products', productRoutes);
+
 
 // Cấu hình cổng server
 const port = 5000; // Thay giá trị này nếu cần

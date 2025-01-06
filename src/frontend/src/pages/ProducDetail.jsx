@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom'; // Thêm useNavigate
 import axios from 'axios';
+import jwt_decode from 'jwt-decode';
 
 const ProductDetail = () => {
-  const { productId } = useParams(); // Lấy productId từ URL
+  const { productId } = useParams();
   const [product, setProduct] = useState(null);
+  const navigate = useNavigate(); // Khai báo useNavigate
 
   useEffect(() => {
     const fetchProduct = async () => {
-      if (!productId) return; // Kiểm tra nếu productId không có giá trị
+      if (!productId) return;
 
       try {
         const response = await axios.get(`http://localhost:5000/api/products/${productId}`);
-        setProduct(response.data); // Lưu dữ liệu sản phẩm vào state
+        setProduct(response.data);
       } catch (error) {
         console.error('Lỗi khi lấy sản phẩm:', error);
       }
@@ -21,13 +23,42 @@ const ProductDetail = () => {
     fetchProduct();
   }, [productId]);
 
-  const handleAddToCart = () => {
-    // Thêm logic để thêm sản phẩm vào giỏ hàng, ví dụ sử dụng context hoặc redux.
-    alert('Sản phẩm đã được thêm vào giỏ hàng!');
+  const handleAddToCart = async () => {
+    try {
+      // Lấy token từ localStorage hoặc bất kỳ nơi nào bạn lưu trữ token
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert('Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng');
+        return;
+      }
+
+      // Giải mã token để lấy userId
+      const decodedToken = jwt_decode(token);
+      const userId = decodedToken.id;
+
+      // Gửi yêu cầu thêm sản phẩm vào giỏ hàng
+      const response = await axios.post('http://localhost:5000/api/carts/add', {
+        userId,
+        productId,
+        quantity: 1
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}` // Gửi token trong header
+        }
+      });
+
+      alert(response.data.message);
+
+      // Chuyển hướng đến trang giỏ hàng sau khi thêm sản phẩm
+      navigate('/cart');
+    } catch (error) {
+      console.error('Lỗi khi thêm vào giỏ hàng:', error);
+      alert('Có lỗi xảy ra khi thêm vào giỏ hàng.');
+    }
   };
 
   if (!product) {
-    return <div className="text-center text-lg">Đang tải...</div>; // Hiển thị khi chưa có dữ liệu
+    return <div className="text-center text-lg">Đang tải...</div>;
   }
 
   return (
