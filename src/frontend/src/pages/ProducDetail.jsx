@@ -97,7 +97,7 @@ const ProductDetail = () => {
           onClick={handleAddToCart} 
           className="px-6 py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 transition duration-300"
         >
-          Thêm vào giỏ hàng
+          Thêm sản phẩm vào giỏ hàng
         </button>
       </div>
     </div>
