@@ -12,7 +12,7 @@ const Sidebar = () => {
             Trang chủ
           </li>
         </Link>
-        <Link to="/product">
+        <Link to="/allproduct">
           <li className="flex items-center px-4 py-2 text-2xl font-semibold rounded-lg shadow-md hover:bg-gray-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-500">
             <FaBox className="h-5 w-5 mr-2" />
             Quản lí sản phẩm

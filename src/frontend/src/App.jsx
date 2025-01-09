@@ -9,13 +9,15 @@ import Sidebar from "./components/Sidebar";
 import AddProduct from "./pages/AddProduct";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import ProductList from "./components/ProductListByCategory";
-import ManageCatalog from "./pages/ManageCatalog";
-import ManageManufacturer from './pages/ManageManufacturer';
-import CategoryPage from './pages/CategoryPage';
+// import ProductList from "./components/ProductListByCategory";
+import ManufacturersPage from './pages/ManufacturersPage';
+import ManageCategory from './pages/ManageCategory';
 import SearchResults from './pages/SearchResults';
 import ProducDetail from './pages/ProducDetail';
 import Cart from './pages/cart';
+import ProductList from './pages/ProductList';
+import EditProductPage from "./pages/EditProductPage";
+import UsersList from "./pages/UsersList";
 
 function App() {
   // State để theo dõi trạng thái đăng nhập và vai trò người dùng
@@ -72,12 +74,13 @@ function App() {
               <Route path="/add-product" element={<AddProduct />} />
               <Route path="/login" element={<Login onLogin={handleLogin} />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/product" element={<ProductList />} />
-              <Route path="/manage-catalog" element={<ManageCatalog />} />
-              <Route path="/manage-manufacturer" element={<ManageManufacturer />} />
+              <Route path="/manage-manufacturer" element={<ManufacturersPage />} />
               <Route path="/productdetail/:productId" element={<ProducDetail />} />
-              <Route path="/manage-category" element={<CategoryPage />} />
+              <Route path="/manage-category" element={<ManageCategory />} />
               <Route path="/search" element={<SearchResults />} />
+              <Route path="/allproduct" element={<ProductList />} />
+              <Route path="/editproduct/:id" element={<EditProductPage />} />
+              <Route path="/qluser" element={<UsersList />} />
             </Routes>
           </div>
         </div>

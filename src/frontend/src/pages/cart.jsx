@@ -111,21 +111,23 @@ const Cart = () => {
                 <span className="text-lg font-semibold">{item.id_san_pham.gia * item.so_luong} VND</span>
                 <button
                   onClick={() => handleRemoveItem(item.id_san_pham._id)}
-                  className="text-red-500 hover:text-red-700"
+                  className="px-6 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition duration-300"
                 >
                   Xóa
                 </button>
               </div>
             </div>
           ))}
-          <div className="flex justify-between mt-6">
+          <div className="flex justify-between items-center mt-6">
             <span className="font-semibold text-xl">Tổng: {totalPrice} VND</span>
-            <button
-              onClick={handleCheckout}
-              className="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-            >
-              Thanh toán
-            </button>
+            <div className="flex space-x-4">
+              <button
+                onClick={handleCheckout}
+                className="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300"
+              >
+                Thanh toán
+              </button>
+            </div>
           </div>
         </div>
       )}

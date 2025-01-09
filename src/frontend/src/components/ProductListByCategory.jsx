@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom'; // Import Link để điều hướng
+import { Link } from 'react-router-dom';
 
 const ProductListByCategory = ({ categoryId, title }) => {
   const [products, setProducts] = useState([]);
@@ -9,8 +9,7 @@ const ProductListByCategory = ({ categoryId, title }) => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(`http://localhost:5000/api/products/category/${categoryId}`);
-        console.log(response); // Kiểm tra cấu trúc dữ liệu trả về
-        setProducts(response.data); // Dùng response.data nếu cấu trúc đúng
+        setProducts(response.data);
       } catch (error) {
         console.error('Lỗi khi lấy sản phẩm:', error);
       }
@@ -20,17 +19,36 @@ const ProductListByCategory = ({ categoryId, title }) => {
 
   return (
     <div className="my-8">
-      <h2 className="text-xl font-bold mb-4 text-center">{title}</h2>
-      <div className="flex flex-wrap justify-center gap-6">
+      <h2 className="text-4xl font-bold mb-6 text-gray-800">{title}</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-8">
         {products.map((product) => (
-          <Link 
-            key={product._id} 
-            to={`/productdetail/${product._id}`} 
-            className="border p-4 rounded shadow hover:shadow-lg transition-all w-full sm:w-60"
+          <Link
+            key={product._id}
+            to={`/productdetail/${product._id}`}
+            className="group border border-gray-200 rounded-lg shadow-sm hover:shadow-lg transition-shadow bg-white overflow-hidden flex flex-col"
+            style={{ height: '400px', width: '340px' }} 
           >
-            <img src={product.hinh_anh} alt={product.ten_san_pham} className="h-40 w-full object-cover" />
-            <h3 className="text-lg font-medium mt-2">{product.ten_san_pham}</h3>
-            <p className="text-sm text-gray-500">{product.gia} VNĐ</p>
+            {/* Hình ảnh sản phẩm */}
+            <div className="w-full h-56 flex items-center justify-center bg-gray-100">
+              <img
+                src={product.hinh_anh}
+                alt={product.ten_san_pham}
+                className="max-w-full max-h-full object-contain"
+              />
+            </div>
+            {/* Thông tin sản phẩm */}
+            <div className="p-4 flex flex-col flex-grow">
+              <h3 className="text-lg font-semibold font-bold text-gray-700 group-hover:text-blue-600 transition-colors">
+                {product.ten_san_pham}
+              </h3>
+              {/* Hiển thị cấu hình */}
+              <p className="text-sm text-gray-500 mt-2">RAM: {product.cau_hinh?.ram}</p>
+              <p className="text-sm text-gray-500">Ổ cứng: {product.cau_hinh?.o_cung}</p>
+              {/* Đẩy giá xuống dưới và thêm màu */}
+              <div className="mt-auto">
+                <p className="text-2xl text-red-500 font-bold">{product.gia.toLocaleString()} VNĐ</p> {/* Màu đỏ cho giá */}
+              </div>
+            </div>
           </Link>
         ))}
       </div>
@@ -39,4 +57,3 @@ const ProductListByCategory = ({ categoryId, title }) => {
 };
 
 export default ProductListByCategory;
-

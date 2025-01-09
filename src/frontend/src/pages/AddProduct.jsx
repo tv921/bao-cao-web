@@ -188,7 +188,7 @@ const AddProduct = () => {
             onChange={handleChange}
             className="mt-1 p-2 border border-gray-300 rounded w-full"
             rows={4}
-            required
+            
           />
         </div>
         <div>

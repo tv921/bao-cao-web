@@ -54,44 +54,9 @@ const Navbar = ({ onLogout }) => {
         {/* Hotline */}
         <div className="hidden lg:flex items-center space-x-4 text-lg font-medium text-red-600">
           <i className="fas fa-phone-alt"></i>
-          <span>Hotline: </span>
-          <span className="font-bold">0123456789</span>
         </div>
-  
         {/* Menu */}
-        <ul className="flex space-x-6 items-center">
-          {/* Danh mục sản phẩm (Dropdown) */}
-          <li className="relative" ref={dropdownRef}>
-            <button
-              onClick={toggleDropdown}
-              className="text-black bg-blue-300 py-2 px-4 rounded-lg hover:bg-blue-300 transition-all duration-300"
-            >
-              Danh mục sản phẩm
-            </button>
-            {/* Dropdown Menu */}
-            <ul
-              className={`absolute left-0 w-48 mt-2 space-y-2 bg-blue-300 text-black shadow-lg rounded-lg transition-opacity duration-300 ${
-                isDropdownOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
-              }`}
-            >
-              <li>
-                <Link to="/laptop" className="block px-4 py-2 hover:bg-gray-100 rounded-lg">
-                  Laptop văn phòng
-                </Link>
-              </li>
-              <li>
-                <Link to="/accessories" className="block px-4 py-2 hover:bg-gray-100 rounded-lg">
-                  Laptop gaming
-                </Link>
-              </li>
-              <li>
-                <Link to="/components" className="block px-4 py-2 hover:bg-gray-100 rounded-lg">
-                  Laptop mỏng nhẹ
-                </Link>
-              </li>
-            </ul>
-          </li>
-  
+        <ul className="flex space-x-16 items-center">
           {/* Thanh tìm kiếm (Search Bar) */}
           <li className="flex items-center">
             <form onSubmit={handleSearchSubmit} className="flex">

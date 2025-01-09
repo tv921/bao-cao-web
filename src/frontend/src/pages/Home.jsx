@@ -8,7 +8,7 @@ function Home() {
       <Slider />
       <ProductList categoryId="675bc20d6df648478e4756cf" title="Laptop văn phòng" />
       <ProductList categoryId="675cfe95fb5fc99bc8fafce7" title="Laptop gaming" />
-      <ProductList categoryId="675d0fe241cb03f8fcd34b77" title="Laptop mỏng nhẹ cao cấp" />
+      <ProductList categoryId="677bdda0653981e845aa3135" title="Laptop mỏng nhẹ cao cấp" />
     </div>
   );
 }
