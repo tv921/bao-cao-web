@@ -9,7 +9,6 @@ import Sidebar from "./components/Sidebar";
 import AddProduct from "./pages/AddProduct";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-// import ProductList from "./components/ProductListByCategory";
 import ManufacturersPage from './pages/ManufacturersPage';
 import ManageCategory from './pages/ManageCategory';
 import SearchResults from './pages/SearchResults';
@@ -19,6 +18,7 @@ import ProductList from './pages/ProductList';
 import EditProductPage from "./pages/EditProductPage";
 import UsersList from "./pages/UsersList";
 import Orders from "./pages/Order";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   // State để theo dõi trạng thái đăng nhập và vai trò người dùng
@@ -44,7 +44,16 @@ function App() {
 
   // Hàm xử lý đăng nhập
   const handleLogin = () => {
-    setIsLoggedIn(true); // Cập nhật trạng thái đăng nhập
+    setIsLoggedIn(true);
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const decoded = jwtDecode(token);
+        setUserRole(decoded.role); // Cập nhật ngay vai trò
+      } catch (error) {
+        console.error("Invalid token during login", error);
+      }
+    }
   };
 
   // Hàm xử lý đăng xuất
@@ -57,32 +66,82 @@ function App() {
   return (
     <Router>
       <div className="flex min-h-screen">
-        {/* Sidebar: Hiển thị khi người dùng là admin */}
-        {isLoggedIn && <Sidebar />} {/* Sidebar chỉ hiển thị nếu người dùng là admin */}
+      {isLoggedIn && userRole === "admin" && <Sidebar />} {/* Sidebar chỉ hiển thị nếu người dùng là admin */}
 
         {/* Main Content */}
         <div className="flex-1 flex flex-col ml-84">
-         
-          {isLoggedIn ? (
+        {isLoggedIn ? (
             <Navbar1 onLogout={handleLogout} />
           ) : (
             <Navbar />
           )}
           <div className="flex-1 p-6 bg-gray-100">
             <Routes>
+              {/* Public Routes */}
               <Route path="/" element={<Home />} />
               <Route path="/cart" element={<Cart />} />
-              <Route path="/add-product" element={<AddProduct />} />
+              <Route path="/search" element={<SearchResults />} />
               <Route path="/login" element={<Login onLogin={handleLogin} />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/manage-manufacturer" element={<ManufacturersPage />} />
               <Route path="/productdetail/:productId" element={<ProducDetail />} />
-              <Route path="/manage-category" element={<ManageCategory />} />
-              <Route path="/search" element={<SearchResults />} />
-              <Route path="/allproduct" element={<ProductList />} />
-              <Route path="/editproduct/:id" element={<EditProductPage />} />
-              <Route path="/qluser" element={<UsersList />} />
-              <Route path="/order" element={<Orders />} />
+
+              {/* Các route được bảo vệ với PrivateRoute */}
+              <Route
+                path="/order"
+                element={
+                  <PrivateRoute roles={["user", "admin"]}>
+                    <Orders />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/manage-category"
+                element={
+                  <PrivateRoute roles={["admin"]}>
+                    <ManageCategory />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/manage-manufacturer"
+                element={
+                  <PrivateRoute roles={["admin"]}>
+                    <ManufacturersPage />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/allproduct"
+                element={
+                  <PrivateRoute roles={["user", "admin"]}>
+                    <ProductList />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/add-product"
+                element={
+                  <PrivateRoute roles={["admin"]}>
+                    <AddProduct />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/editproduct/:id"
+                element={
+                  <PrivateRoute roles={["admin"]}>
+                    <EditProductPage />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/qluser"
+                element={
+                  <PrivateRoute roles={["admin"]}>
+                    <UsersList />
+                  </PrivateRoute>
+                }
+              />
             </Routes>
           </div>
         </div>
@@ -92,4 +151,3 @@ function App() {
 }
 
 export default App;
-
