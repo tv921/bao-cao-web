@@ -40,6 +40,7 @@ const Orders = () => {
               <p className="text-gray-700">Tổng tiền: <span className="text-blue-600 font-bold">{order.tong_tien.toLocaleString()} VND</span></p>
               <p className="text-gray-700">Ghi chú: {order.ghi_chu}</p>
               <p className="text-gray-700">Phương thức thanh toán: {order.phuong_thuc_thanh_toan}</p>
+              <p className="text-gray-700">Địa chỉ giao hàng: {order.id_nguoi_dung.dia_chi}</p> {/* Hiển thị địa chỉ */}
               <div className="mt-4">
                 <h4 className="text-lg font-medium">Sản phẩm:</h4>
                 {order.san_pham.map((sp, index) => (
@@ -59,4 +60,5 @@ const Orders = () => {
 };
 
 export default Orders;
+
 
