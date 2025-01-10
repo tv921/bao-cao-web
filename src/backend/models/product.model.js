@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const productSchema = new Schema({
   ten_san_pham: { type: String, required: true },
-  mo_ta: { type: String, required: true },
+  mo_ta: { type: String, required: false },
   gia: { type: Number, required: true },
   hinh_anh: { type: String },
   trang_thai: { type: String },

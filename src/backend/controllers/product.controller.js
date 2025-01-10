@@ -2,18 +2,32 @@ const ProductModel = require('../models/product.model'); // Model sản phẩm
 const CategoryModel = require('../models/categories.model'); // Model danh mục
 const ManufacturerModel = require('../models/manufacturers.model'); // Model hãng sản xuất
 const Product = require("../models/product.model");
+const path = require('path');
 // API lấy tất cả sản phẩm
+// const getAllProducts = async (req, res) => {
+//   try {
+//     const products = await ProductModel.find()
+
+//     if (!products || products.length === 0) {
+//       return res.status(404).json({ message: 'Không tìm thấy sản phẩm' });
+//     }
+
+//     res.status(200).json(products);
+//   } catch (error) {
+//     res.status(500).json({ message: 'Lỗi khi lấy sản phẩm', error: error.message });
+//   }
+// };
+
+// API để lấy tất cả sản phẩm
 const getAllProducts = async (req, res) => {
   try {
     const products = await ProductModel.find()
-
-    if (!products || products.length === 0) {
-      return res.status(404).json({ message: 'Không tìm thấy sản phẩm' });
-    }
-
-    res.status(200).json(products);
-  } catch (error) {
-    res.status(500).json({ message: 'Lỗi khi lấy sản phẩm', error: error.message });
+      .populate('id_danh_muc', 'ten_danh_muc')  // Populate thông tin danh mục
+      .populate('id_hang_san_xuat', 'ten_hang_san_xuat');  // Populate thông tin hãng sản xuất
+    
+    res.json(products);  // Trả về danh sách sản phẩm
+  } catch (err) {
+    res.status(500).json({ message: 'Lỗi khi lấy sản phẩm', error: err.message });
   }
 };
 
@@ -22,7 +36,7 @@ const getProductsByCategory = async (req, res) => {
   try {
     const { categoryId } = req.params;
     const products = await ProductModel.find({ id_danh_muc: categoryId })
-      .limit(4); // Giới hạn số lượng sản phẩm trả về là 4
+      .limit(6); // Giới hạn số lượng sản phẩm trả về là 4
 
     if (products.length === 0) {
       return res.status(404).json({ message: 'No products found in this category' });
@@ -84,32 +98,65 @@ const addProduct = async (req, res) => {
   }
 };
 
-/// API sửa sản phẩm
+// Controller update product
 const updateProduct = async (req, res) => {
-  const { id } = req.params; // Lấy ID từ params
-  const { ten_san_pham, mo_ta, gia, id_danh_muc, id_hang_san_xuat } = req.body;
-    const hinh_anh = req.files.find((file) => file.fieldname === 'images')?.path.replace(path.join(__dirname, '../../frontend/public'), '').replace(/\\/g, '/') || '';
-
   try {
-    // Tìm và cập nhật sản phẩm theo ID
-    const updatedProduct = await ProductModel.findByIdAndUpdate(id, {
-      ten_san_pham,
-      mo_ta,
-      gia,
-      hinh_anh,
-      id_danh_muc,  // Liên kết với danh mục
-      id_hang_san_xuat,  // Liên kết với hãng sản xuất
-    }, { new: true });  // new: true để trả về sản phẩm sau khi cập nhật
+    const { id } = req.params;
+    const { ten_san_pham, mo_ta, gia, id_danh_muc, id_hang_san_xuat, cau_hinh } = req.body;
 
-    if (!updatedProduct) {
-      return res.status(404).json({ message: 'Sản phẩm không tồn tại' });
+    // Kiểm tra nếu có file ảnh mới thì lấy tên ảnh
+    let hinh_anh = null;
+
+    // Nếu có file ảnh mới
+    if (req.files && req.files.length > 0) {
+      hinh_anh = `/images/${req.files[0].filename}`;  // Lấy tên file ảnh mới
+    } else {
+      // Nếu không có file ảnh mới, lấy ảnh cũ từ cơ sở dữ liệu
+      const existingProduct = await ProductModel.findById(id);
+      
+      // Kiểm tra xem sản phẩm có tồn tại không
+      if (!existingProduct) {
+        return res.status(404).json({ message: 'Sản phẩm không tồn tại' });
+      }
+
+      console.log("Existing product:", existingProduct); // Debug thông tin sản phẩm
+
+      // Giữ nguyên giá trị ảnh cũ nếu có
+      hinh_anh = existingProduct.hinh_anh || '';  // Nếu không có ảnh cũ thì trả về chuỗi rỗng
     }
 
-    res.json(updatedProduct);
-  } catch (error) {
-    res.status(500).json({ message: 'Lỗi khi sửa sản phẩm', error: error.message });
+    // Cập nhật sản phẩm trong cơ sở dữ liệu
+    const updatedProduct = await ProductModel.findByIdAndUpdate(
+      id,
+      {
+        ten_san_pham,
+        mo_ta,
+        gia,
+        id_danh_muc,
+        id_hang_san_xuat,
+        cau_hinh: JSON.parse(cau_hinh), // Chuyển JSON string thành object nếu cần
+        hinh_anh, // Lưu đường dẫn ảnh dưới dạng tương đối
+      },
+      { new: true } // Trả về sản phẩm đã được cập nhật
+    );
+
+    if (!updatedProduct) {
+      return res.status(404).json({ message: 'Sản phẩm không tìm thấy' });
+    }
+
+    res.status(200).json(updatedProduct);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Lỗi khi cập nhật sản phẩm', error: err.message });
   }
 };
+
+
+
+
+
+
+
 // API xóa sản phẩm
 const deleteProduct = async (req, res) => {
   const { id } = req.params; // Lấy ID từ params

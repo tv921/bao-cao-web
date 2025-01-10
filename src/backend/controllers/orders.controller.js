@@ -1,4 +1,5 @@
 const Order = require('../models/order.model');
+const Cart = require('../models/cart.model');
 
 const getAllOrders = async (req, res) => {
     try {
@@ -48,4 +49,53 @@ const deleteOrder = async (req, res) => {
     }
 };
 
-module.exports = {getAllOrders, createOrder, updateOrder, deleteOrder};
+// API để xử lý thanh toán đơn hàng
+const checkoutOrder = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+
+        // Lấy giỏ hàng của người dùng và populate thông tin sản phẩm
+        const cart = await Cart.findOne({ id_nguoi_dung: userId }).populate('san_pham.id_san_pham');
+        if (!cart) {
+            return res.status(404).json({ message: 'Giỏ hàng không tồn tại.' });
+        }
+
+        // Tạo đơn hàng từ giỏ hàng
+        const newOrder = new Order({
+            id_nguoi_dung: userId,
+            san_pham: cart.san_pham.map(item => ({
+                id_san_pham: item.id_san_pham._id,
+                so_luong: item.so_luong,
+                gia: item.id_san_pham.gia // Lấy giá từ sản phẩm đã populate
+            })),
+            tong_tien: cart.san_pham.reduce((total, item) => total + item.so_luong * item.id_san_pham.gia, 0), // Tính tổng tiền
+            ghi_chu: req.body.ghi_chu || '',
+            phuong_thuc_thanh_toan: req.body.phuong_thuc_thanh_toan || 'Tiền mặt'
+        });
+
+        await newOrder.save();
+
+        // Xóa giỏ hàng sau khi tạo đơn hàng thành công
+        await Cart.findByIdAndDelete(cart._id);
+
+        res.status(200).json({ message: 'Đơn hàng đã được tạo thành công.', order: newOrder });
+    } catch (error) {
+        res.status(500).json({ message: 'Lỗi khi xử lý đơn hàng.', error });
+    }
+};
+
+
+// API để lấy danh sách đơn hàng của người dùng
+const getOrderById = async (req, res) => {
+    try {
+        const orders = await Order.find({ id_nguoi_dung: req.params.userId })
+            .populate('san_pham.id_san_pham')
+            .populate('id_nguoi_dung', 'ten_dang_nhap email sdt dia_chi'); // Thêm populate để lấy thông tin địa chỉ từ bảng User
+        res.status(200).json(orders);
+    } catch (error) {
+        res.status(500).json({ message: 'Lỗi khi lấy danh sách đơn hàng', error });
+    }
+};
+
+
+module.exports = {getAllOrders, createOrder, updateOrder, deleteOrder, checkoutOrder, getOrderById};
