@@ -18,6 +18,7 @@ import Cart from './pages/cart';
 import ProductList from './pages/ProductList';
 import EditProductPage from "./pages/EditProductPage";
 import UsersList from "./pages/UsersList";
+import Orders from "./pages/Order";
 
 function App() {
   // State để theo dõi trạng thái đăng nhập và vai trò người dùng
@@ -81,6 +82,7 @@ function App() {
               <Route path="/allproduct" element={<ProductList />} />
               <Route path="/editproduct/:id" element={<EditProductPage />} />
               <Route path="/qluser" element={<UsersList />} />
+              <Route path="/order" element={<Orders />} />
             </Routes>
           </div>
         </div>

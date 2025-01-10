@@ -5,23 +5,21 @@ import jwtDecode from 'jwt-decode';
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [note, setNote] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState('Thanh toán tại cửa hàng');
 
-  // Lấy token từ localStorage (hoặc sessionStorage)
-  const token = localStorage.getItem('token'); // hoặc lấy từ sessionStorage
-
-  // Giải mã token và lấy userId
+  const token = localStorage.getItem('token');
   let userId = '';
   if (token) {
     const decodedToken = jwtDecode(token);
-    userId = decodedToken.id; // Trường 'id' trong payload của token
+    userId = decodedToken.id;
   }
 
   useEffect(() => {
     if (userId) {
-      // Fetch giỏ hàng cho người dùng dựa trên userId
       axios.get(`http://localhost:5000/api/carts/${userId}`)
         .then(response => {
-          const cart = response.data;  // Giả sử giỏ hàng của người dùng được trả về
+          const cart = response.data;
           setCartItems(cart.san_pham);
           setTotalPrice(cart.tong_tien);
         })
@@ -29,7 +27,7 @@ const Cart = () => {
           console.error("Có lỗi khi lấy dữ liệu giỏ hàng!", error);
         });
     }
-  }, [userId]);  // Re-run effect khi userId thay đổi
+  }, [userId]);
 
   const handleQuantityChange = (productId, newQuantity) => {
     const updatedItems = cartItems.map(item => {
@@ -75,9 +73,28 @@ const Cart = () => {
     }
   };
 
-  const handleCheckout = () => {
-    // Logic thanh toán ở đây, ví dụ chuyển đến trang checkout hoặc gọi API
-    console.log("Tiến hành thanh toán");
+  const handleCheckout = async () => {
+    try {
+      const response = await axios.post(`http://localhost:5000/api/orders/checkout/${userId}`, {
+        ghi_chu: note,
+        phuong_thuc_thanh_toan: paymentMethod
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      if (response.status === 200) {
+        alert('Đơn hàng đã được tạo thành công!');
+        setCartItems([]);
+        setTotalPrice(0);
+        setNote('');
+        setPaymentMethod('Thanh toán tại cửa hàng');
+      }
+    } catch (error) {
+      console.error('Lỗi khi gửi đơn hàng:', error);
+      alert('Có lỗi xảy ra khi gửi đơn hàng.');
+    }
   };
 
   return (
@@ -108,7 +125,9 @@ const Cart = () => {
                   className="w-12 p-2 border rounded"
                   onChange={(e) => handleQuantityChange(item.id_san_pham._id, parseInt(e.target.value))}
                 />
-                <span className="text-lg font-semibold">{item.id_san_pham.gia * item.so_luong} VND</span>
+                <span className="text-lg font-semibold">
+                  {(item.id_san_pham.gia * item.so_luong).toLocaleString('vi-VN')} VND
+                </span>
                 <button
                   onClick={() => handleRemoveItem(item.id_san_pham._id)}
                   className="px-6 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition duration-300"
@@ -118,14 +137,37 @@ const Cart = () => {
               </div>
             </div>
           ))}
+          <div className="mt-6">
+            <label className="block mb-2 font-medium">Ghi chú đơn hàng:</label>
+            <textarea
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+              className="w-full p-2 border rounded"
+              rows="3"
+            ></textarea>
+          </div>
+          <div className="mt-4">
+            <label className="block mb-2 font-medium">Phương thức thanh toán:</label>
+            <select
+              value={paymentMethod}
+              onChange={(e) => setPaymentMethod(e.target.value)}
+              className="w-full p-2 border rounded"
+            >
+              <option value="Thanh toán tại cửa hàng">Thanh toán tại cửa hàng</option>
+              <option value="Thanh toán khi nhận hàng (COD)">Thanh toán khi nhận hàng (COD)</option>
+              <option value="Thanh toán bằng chuyển khoản ngân hàng">Thanh toán bằng chuyển khoản ngân hàng</option>
+            </select>
+          </div>
           <div className="flex justify-between items-center mt-6">
-            <span className="font-semibold text-xl">Tổng: {totalPrice} VND</span>
+            <span className="font-semibold text-xl">
+              Tổng: {totalPrice.toLocaleString('vi-VN')} VND
+            </span>
             <div className="flex space-x-4">
               <button
                 onClick={handleCheckout}
                 className="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300"
               >
-                Thanh toán
+                Gửi đơn hàng
               </button>
             </div>
           </div>
@@ -136,3 +178,5 @@ const Cart = () => {
 };
 
 export default Cart;
+
+
