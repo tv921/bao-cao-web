@@ -119,13 +119,14 @@ const updateUserInfo = async (req, res) => {
 const getAllUsers = async (req, res) => {
   try {
     // Lọc người dùng có role là "user"
-    const users = await User.find({ role: "user" }).select("ten_dang_nhap email role createdAt");
+    const users = await User.find({ role: "user" }); // Không sử dụng .select để lấy tất cả các trường
     res.status(200).json(users);
   } catch (error) {
     console.error("Error fetching users:", error);
     res.status(500).json({ message: "Lỗi hệ thống" });
   }
 };
+
 
 // Xóa người dùng
 const deleteUser = async (req, res) => {

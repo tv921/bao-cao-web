@@ -31,19 +31,19 @@ router.get('/category/:categoryId', getProductsByCategory);
 
 router.get('/search', searchProducts);
 
-/// Lấy tất cả sản phẩm
+// Lấy tất cả sản phẩm
 router.get("/", getAllProducts);
 
 // Thêm sản phẩm mới
 router.post("/", upload.any(), addProduct);
 
 // Cập nhật sản phẩm theo ID
-router.put("/:id", updateProduct);
+router.put("/:id", upload.any(), updateProduct);
 
 // Xóa sản phẩm theo ID
 router.delete("/:id", deleteProduct);
 
-// Route: Lấy chi tiết sản phẩm theo ID
+// Lấy chi tiết sản phẩm theo ID
 router.get('/:id', getProductById);
 
 module.exports = router;

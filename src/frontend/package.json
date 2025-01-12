@@ -2,7 +2,7 @@
   "name": "my-react-app",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
+  "type": "commonjs",
   "proxy": "http://localhost:5000",
   "scripts": {
     "start": "vite",

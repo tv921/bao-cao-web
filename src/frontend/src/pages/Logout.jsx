@@ -6,7 +6,7 @@ const Logout = () => {
 
   useEffect(() => {
     localStorage.removeItem('token'); // Xóa token khỏi localStorage
-    navigate('/login'); // Điều hướng về trang đăng nhập
+    navigate('/'); // Điều hướng về trang đăng nhập
   }, [navigate]);
 
   return null; // Không cần giao diện cho trang đăng xuất
