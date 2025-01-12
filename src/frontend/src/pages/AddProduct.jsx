@@ -21,7 +21,6 @@ const AddProduct = () => {
       cong_ket_noi: "",
       he_dieu_hanh: "",
       trong_luong: "",
-      kich_thuoc: "",
     },
   });
   const [imagePreview, setImagePreview] = useState(null);
@@ -152,8 +151,7 @@ const AddProduct = () => {
           pin: "",
           cong_ket_noi: "",
           he_dieu_hanh: "",
-          trong_luong: "",
-          kich_thuoc: "",
+          trong_luong: "", 
         },
       });
       setImagePreview(hinh_anh_url || null); // Hiển thị lại ảnh đã tải lên (nếu cần)

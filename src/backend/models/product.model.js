@@ -19,7 +19,7 @@ const productSchema = new Schema({
     cong_ket_noi: { type: String, required: true },  
     he_dieu_hanh: { type: String, required: true },  
     trong_luong: { type: String, required: true },
-    kich_thuoc: { type: String, required: true },  
+   
   } // Liên kết với hãng sản xuất
 });
 

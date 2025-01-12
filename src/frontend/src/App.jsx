@@ -14,7 +14,7 @@ import ManageCategory from './pages/ManageCategory';
 import SearchResults from './pages/SearchResults';
 import ProducDetail from './pages/ProducDetail';
 import Cart from './pages/cart';
-import ProductList from './pages/ProductList';
+import ManageProduct from './pages/ManageProduct';
 import EditProductPage from "./pages/EditProductPage";
 import ManageUser from "./pages/ManageUser";
 import Orders from "./pages/Order";
@@ -117,10 +117,10 @@ function App() {
                 }
               />
               <Route
-                path="/allproduct"
+                path="/manage-product"
                 element={
                   <PrivateRoute roles={["user", "admin"]}>
-                    <ProductList />
+                    <ManageProduct />
                   </PrivateRoute>
                 }
               />

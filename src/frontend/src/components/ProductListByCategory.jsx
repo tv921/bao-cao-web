@@ -41,9 +41,7 @@ const ProductListByCategory = ({ categoryId, title }) => {
               <h3 className="text-lg font-semibold font-bold text-gray-700 group-hover:text-blue-600 transition-colors">
                 {product.ten_san_pham}
               </h3>
-              {/* Hiển thị cấu hình */}
-              <p className="text-sm text-gray-500 mt-2">RAM: {product.cau_hinh?.ram}</p>
-              <p className="text-sm text-gray-500">Ổ cứng: {product.cau_hinh?.o_cung}</p>
+              
               {/* Đẩy giá xuống dưới và thêm màu */}
               <div className="mt-auto">
                 <p className="text-2xl text-red-500 font-bold">{product.gia.toLocaleString()} VNĐ</p> {/* Màu đỏ cho giá */}

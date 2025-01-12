@@ -22,6 +22,6 @@ router.post("/logout", userController.logoutUser);  // Thêm route đăng xuất
 router.put("/user-info", userController.updateUserInfo);  // Cập nhật thông tin người dùng, không cần id trong URL vì thông tin đã có trong token
 
 // Route để xóa người dùng (chỉ dành cho admin)
-router.delete("/users/:id", userController.deleteUser);  // Đảm bảo chỉ admin mới có quyền xóa người dùng
+router.delete("/:id", userController.deleteUser);  // Đảm bảo chỉ admin mới có quyền xóa người dùng
 
 module.exports = router;

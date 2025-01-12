@@ -151,12 +151,6 @@ const updateProduct = async (req, res) => {
   }
 };
 
-
-
-
-
-
-
 // API xóa sản phẩm
 const deleteProduct = async (req, res) => {
   const { id } = req.params; // Lấy ID từ params

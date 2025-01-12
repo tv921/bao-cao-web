@@ -127,23 +127,34 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-
-// Xóa người dùng
 const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
+    
+    // Tìm người dùng trong cơ sở dữ liệu
     const deletedUser = await User.findByIdAndDelete(id);
-
+    
     if (!deletedUser) {
+      // Nếu không tìm thấy người dùng, trả về lỗi
       return res.status(404).json({ message: "Người dùng không tồn tại" });
     }
 
+    // Nếu xóa thành công, trả về thông báo
     res.status(200).json({ message: "Xóa người dùng thành công" });
   } catch (error) {
+    // In ra lỗi để dễ dàng debug
     console.error("Error deleting user:", error);
+
+    // Kiểm tra nếu lỗi liên quan đến việc không thể đọc thuộc tính 'role' 
+    if (error.message.includes("role")) {
+      return res.status(500).json({ message: "Lỗi khi xóa người dùng, không tìm thấy vai trò." });
+    }
+
+    // Trả về lỗi chung
     res.status(500).json({ message: "Lỗi hệ thống" });
   }
 };
+
 
 module.exports = { registerUser, loginUser, logoutUser, getUserInfo, updateUserInfo, getAllUsers, deleteUser };
 

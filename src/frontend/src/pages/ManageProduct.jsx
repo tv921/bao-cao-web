@@ -82,7 +82,7 @@ const ProductsPage = () => {
                   <p><strong>Cổng kết nối:</strong> {product.cau_hinh.cong_ket_noi}</p>
                   <p><strong>Hệ điều hành:</strong> {product.cau_hinh.he_dieu_hanh}</p>
                   <p><strong>Trọng lượng:</strong> {product.cau_hinh.trong_luong}</p>
-                  <p><strong>Kích thước:</strong> {product.cau_hinh.kich_thuoc}</p>
+                 
                 </div>
               )}
 

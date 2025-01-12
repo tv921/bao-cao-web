@@ -23,29 +23,44 @@ const SearchResults = () => {
   }, [searchQuery]);
 
   return (
-<div>
-  <h1 className="text-xl font-bold mb-4">Kết quả tìm kiếm cho: "{searchQuery}"</h1>
-  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+<div className="my-8">
+  <h1 className="text-4xl font-bold mb-6 text-gray-800">Kết quả tìm kiếm cho: "{searchQuery}"</h1>
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-8">
     {results.length > 0 ? (
       results.map((product) => (
-        <Link to={`/productdetail/${product._id}`} key={product._id} className="border p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between">
-          <div>
+        <Link
+          to={`/productdetail/${product._id}`}
+          key={product._id}
+          className="group border border-gray-200 rounded-lg shadow-sm hover:shadow-lg transition-shadow bg-white overflow-hidden flex flex-col"
+          style={{ height: '400px', width: '340px' }}
+        >
+          {/* Hình ảnh sản phẩm */}
+          <div className="w-full h-56 flex items-center justify-center bg-gray-100">
             <img
-              src={product.hinh_anh} // Giả sử bạn có trường image trong dữ liệu sản phẩm
-              alt={product.ten_san_pham} // Giả sử bạn có trường name trong dữ liệu sản phẩm
-              className="w-full h-48 object-cover mb-4"
+              src={product.hinh_anh}
+              alt={product.ten_san_pham}
+              className="max-w-full max-h-full object-contain"
             />
-            <h2 className="text-lg font-semibold">{product.ten_san_pham}</h2> {/* Giả sử bạn có trường name */}
-            <p className="text-sm text-gray-600">{product.mo_ta}</p> {/* Giả sử bạn có trường description */}
           </div>
-          <p className="text-xl font-bold mt-2">{product.gia} VND</p> {/* Giả sử bạn có trường price */}
+          {/* Thông tin sản phẩm */}
+          <div className="p-4 flex flex-col flex-grow">
+            <h2 className="text-lg font-semibold text-gray-700 group-hover:text-blue-600 transition-colors">
+              {product.ten_san_pham}
+            </h2>
+            <div className="mt-auto">
+              <p className="text-2xl text-red-500 font-bold">
+                {product.gia.toLocaleString()} VNĐ
+              </p> {/* Màu đỏ cho giá */}
+            </div>
+          </div>
         </Link>
       ))
     ) : (
-      <p className="text-lg">Không tìm thấy sản phẩm nào!</p>
+      <p className="text-lg text-gray-600">Không tìm thấy sản phẩm nào!</p>
     )}
   </div>
 </div>
+
 
   );
 };

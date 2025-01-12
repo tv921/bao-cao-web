@@ -51,21 +51,17 @@ const Navbar = ({ onLogout }) => {
           </Link>
         </div>
   
-        {/* Hotline */}
-        <div className="hidden lg:flex items-center space-x-4 text-lg font-medium text-red-600">
-          <i className="fas fa-phone-alt"></i>
-        </div>
-        {/* Menu */}
-        <ul className="flex space-x-16 items-center">
+          {/* Menu */}
+          <ul className="flex space-x-6 items-center w-full justify-center">
           {/* Thanh tìm kiếm (Search Bar) */}
-          <li className="flex items-center">
-            <form onSubmit={handleSearchSubmit} className="flex">
+          <li className="flex-grow">
+            <form onSubmit={handleSearchSubmit} className="flex justify-center w-full">
               <input
                 type="text"
                 value={searchQuery}
                 onChange={handleSearchChange}
                 placeholder="Tìm kiếm..."
-                className="p-3 rounded-lg text-black focus:outline-none border-2 border-gray-300 focus:border-blue-500 transition-all duration-300"
+                className="p-3 w-2/3 rounded-lg text-black focus:outline-none border-2 border-gray-300 focus:border-blue-500 transition-all duration-300"
               />
               <button
                 type="submit"
