@@ -4,7 +4,10 @@ import jwtDecode from 'jwt-decode';
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
+<<<<<<< HEAD
   const [loading, setLoading] = useState(false); // Thêm trạng thái loading
+=======
+>>>>>>> 68a496a9c7ed62d6bdeba114dd486927c8e7fd6a
 
   // Lấy token từ localStorage
   const token = localStorage.getItem('token');
@@ -26,6 +29,7 @@ const Orders = () => {
     }
   }, [userId]);
 
+<<<<<<< HEAD
   // Hàm xử lý thanh toán
   const handlePayment = async (orderId, totalPrice) => {
     if (!totalPrice || !orderId) {
@@ -80,6 +84,8 @@ const Orders = () => {
     }
   };
 
+=======
+>>>>>>> 68a496a9c7ed62d6bdeba114dd486927c8e7fd6a
   return (
     <div className="container mx-auto p-6">
       <h1 className="text-3xl font-bold mb-6 text-center">Danh sách đơn hàng của bạn</h1>
@@ -106,6 +112,7 @@ const Orders = () => {
                   </div>
                 ))}
               </div>
+<<<<<<< HEAD
 
               {/* Nút thanh toán và xóa cho từng đơn hàng */}
               {order.trang_thai !== 'Đã giao' && order.trang_thai !== 'Hủy' && (
@@ -129,6 +136,8 @@ const Orders = () => {
                   </div>
                 </div>
               )}
+=======
+>>>>>>> 68a496a9c7ed62d6bdeba114dd486927c8e7fd6a
             </div>
           ))}
         </div>
@@ -138,3 +147,8 @@ const Orders = () => {
 };
 
 export default Orders;
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 68a496a9c7ed62d6bdeba114dd486927c8e7fd6a
