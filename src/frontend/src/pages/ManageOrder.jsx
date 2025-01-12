@@ -73,6 +73,9 @@ const ManageOrder = () => {
                     <p className="text-gray-600">Tên sản phẩm: {sp.id_san_pham.ten_san_pham}</p>
                     <p className="text-gray-600">Số lượng: {sp.so_luong}</p>
                     <p className="text-gray-600">Giá: {sp.gia.toLocaleString()} VND</p>
+                    <p className={`text-sm font-medium mt-4 ${getStatusClass(order.trang_thai)}`}>
+                    Trạng thái: {order.trang_thai}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -89,10 +92,7 @@ const ManageOrder = () => {
                 <option value="Đã giao">Đã giao</option>
                 <option value="Hủy">Hủy</option>
               </select>
-              </div>
-              <p className={`text-sm font-medium mt-4 ${getStatusClass(order.trang_thai)}`}>
-                Trạng thái: {order.trang_thai}
-              </p>
+              </div> 
             </div>
           ))}
         </div>

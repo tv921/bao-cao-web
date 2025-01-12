@@ -97,7 +97,6 @@ const getOrderById = async (req, res) => {
     }
 };
 
-<<<<<<< HEAD
 const approveOrder = async (req, res) => {
     try {
         const { orderId } = req.params;
@@ -122,7 +121,3 @@ const approveOrder = async (req, res) => {
 
 
 module.exports = {getAllOrders, createOrder, updateOrder, deleteOrder, checkoutOrder, getOrderById, approveOrder};
-=======
-
-module.exports = {getAllOrders, createOrder, updateOrder, deleteOrder, checkoutOrder, getOrderById};
->>>>>>> 68a496a9c7ed62d6bdeba114dd486927c8e7fd6a

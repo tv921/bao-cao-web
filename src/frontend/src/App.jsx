@@ -16,18 +16,12 @@ import ProducDetail from './pages/ProducDetail';
 import Cart from './pages/cart';
 import ProductList from './pages/ProductList';
 import EditProductPage from "./pages/EditProductPage";
-<<<<<<< HEAD
 import ManageUser from "./pages/ManageUser";
 import Orders from "./pages/Order";
 import PrivateRoute from "./components/PrivateRoute";
 import ManageOrder from "./pages/ManageOrder";
 import Logout from './pages/Logout';
 
-=======
-import UsersList from "./pages/UsersList";
-import Orders from "./pages/Order";
-import PrivateRoute from "./components/PrivateRoute";
->>>>>>> 68a496a9c7ed62d6bdeba114dd486927c8e7fd6a
 
 function App() {
   // State để theo dõi trạng thái đăng nhập và vai trò người dùng
@@ -93,12 +87,9 @@ function App() {
               <Route path="/login" element={<Login onLogin={handleLogin} />} />
               <Route path="/register" element={<Register />} />
               <Route path="/productdetail/:productId" element={<ProducDetail />} />
-<<<<<<< HEAD
               <Route path="/logout" element={<Logout />} />
 
 
-=======
->>>>>>> 68a496a9c7ed62d6bdeba114dd486927c8e7fd6a
 
               {/* Các route được bảo vệ với PrivateRoute */}
               <Route
@@ -153,7 +144,6 @@ function App() {
                 path="/qluser"
                 element={
                   <PrivateRoute roles={["admin"]}>
-<<<<<<< HEAD
                     <ManageUser />
                   </PrivateRoute>
                 }
@@ -163,9 +153,6 @@ function App() {
                 element={
                   <PrivateRoute roles={["admin"]}>
                     <ManageOrder />
-=======
-                    <UsersList />
->>>>>>> 68a496a9c7ed62d6bdeba114dd486927c8e7fd6a
                   </PrivateRoute>
                 }
               />
