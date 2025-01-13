@@ -23,8 +23,11 @@ import ManageOrder from "./pages/ManageOrder";
 import Logout from './pages/Logout';
 import ProductsByManufacturer from './components/ProductsByManufacturer';
 import ProductsByManufacturerDell from './components/ProductsByManufacturerDell';
-import ProductsByManufacturerLenovo from './components/ProductsByManufacturerLenovo'; //
+import ProductsByManufacturerLenovo from './components/ProductsByManufacturerLenovo'; 
 import ProductsByManufacturerMacbook from './components/ProductsByManufacturerMacbook';
+import ProductsByManufacturerAsus from './components/ProductsByManufacturerAsus';
+import ProductsByManufacturerAcer from './components/ProductsByManufacturerAcer';
+import ProductsByManufacturerMSI from './components/ProductsByManufacturerMSI';
 
 function App() {
   // State để theo dõi trạng thái đăng nhập và vai trò người dùng
@@ -95,9 +98,12 @@ function App() {
               <Route path="/logout" element={<Logout />} />
 
               <Route path="/products/hp" element={<ProductsByManufacturer manufacturerName="HP" />} />
-              <Route path="/products/dell" element={<ProductsByManufacturerDell manufacturerName="DELL" />} />
-              <Route path="/products/macbook" element={<ProductsByManufacturerMacbook manufacturerName="MACBOOK" />} />
-              <Route path="/products/lenovo" element={<ProductsByManufacturerLenovo manufacturerName="LENOVO" />} />
+              <Route path="/products/dell" element={<ProductsByManufacturerDell manufacturerName="Dell" />} />
+              <Route path="/products/macbook" element={<ProductsByManufacturerMacbook manufacturerName="Apple" />} />
+              <Route path="/products/lenovo" element={<ProductsByManufacturerLenovo manufacturerName="Lenovo" />} />
+              <Route path="/products/asus" element={<ProductsByManufacturerAsus manufacturerName="Asus" />} />
+              <Route path="/products/acer" element={<ProductsByManufacturerAcer manufacturerName="Acer" />} />
+              <Route path="/products/msi" element={<ProductsByManufacturerLenovo manufacturerName="MSI" />} />
               {/* Các route được bảo vệ với PrivateRoute */}
               <Route
                 path="/order"
@@ -172,4 +178,3 @@ function App() {
 }
 
 export default App;
-

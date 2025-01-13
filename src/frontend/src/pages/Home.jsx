@@ -19,6 +19,21 @@ function Home() {
     navigate('/products/lenovo'); // Navigate to the Lenovo products page
   };
 
+  const handleShowAsus = () => {
+    navigate('/products/asus'); // Navigate to the MacBook products page
+  };
+
+
+  const handleShowAcer = () => {
+    navigate('/products/acer'); // Navigate to the MacBook products page
+  };
+
+
+  const handleShowMSI= () => {
+    navigate('/products/msi'); // Navigate to the MacBook products page
+  };
+
+
   const handleShowMacBooks = () => {
     navigate('/products/macbook'); // Navigate to the MacBook products page
   };
@@ -61,7 +76,32 @@ function Home() {
           >
             <img src="/images/macbook.svg" alt="Macbook" />
           </button>
+
+          <button
+            onClick={handleShowAsus}
+            className="px-4 py-2 border border-gray-300 text-white rounded transition-all duration-300 hover:shadow-lg hover:border-blue-500"
+          >
+            <img src="/img/asus.svg" alt="Asus" />
+          </button>
+
+         <button
+            onClick={handleShowAcer}
+            className="px-4 py-2 border border-gray-300 text-white rounded transition-all duration-300 hover:shadow-lg hover:border-blue-500"
+          >
+            <img src="/img/acer.svg" alt="Acer" />
+          </button>
+       
+
+         <button
+            onClick={handleShowMSI}
+            className="px-4 py-2 border border-gray-300 text-white rounded transition-all duration-300 hover:shadow-lg hover:border-blue-500"
+          >
+            <img src="/img/msi.svg" alt="MSI" />
+          </button>
         </div>
+
+         
+        
 
         {/* Các danh mục sản phẩm */}
         <div className="product-categories mt-8">
