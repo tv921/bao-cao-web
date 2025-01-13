@@ -1,0 +1,2 @@
+backend: npm install express mongoose path cors body-parser dotenv
+frontend: npm install vite --save-dev

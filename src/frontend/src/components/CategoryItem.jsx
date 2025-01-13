@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CategoryItem = ({ category }) => {
+const CategoryItem = ({ category, onEdit, onDelete }) => {
   const handleDelete = async () => {
     const confirmed = window.confirm('Bạn có chắc chắn muốn xóa danh mục này?');
     if (confirmed) {
@@ -20,7 +20,7 @@ const CategoryItem = ({ category }) => {
       <div className="space-x-2">
         <button
           className="px-4 py-2 bg-blue-500 text-white rounded"
-          onClick={() => alert('Chức năng sửa chưa được triển khai')}
+          onClick={() => onEdit(category)} // Gọi hàm onEdit khi nhấn "Sửa"
         >
           Sửa
         </button>
