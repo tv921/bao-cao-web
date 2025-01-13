@@ -21,7 +21,10 @@ import Orders from "./pages/Order";
 import PrivateRoute from "./components/PrivateRoute";
 import ManageOrder from "./pages/ManageOrder";
 import Logout from './pages/Logout';
-
+import ProductsByManufacturer from './components/ProductsByManufacturer';
+import ProductsByManufacturerDell from './components/ProductsByManufacturerDell';
+import ProductsByManufacturerLenovo from './components/ProductsByManufacturerLenovo'; //
+import ProductsByManufacturerMacbook from './components/ProductsByManufacturerMacbook';
 
 function App() {
   // State để theo dõi trạng thái đăng nhập và vai trò người dùng
@@ -88,9 +91,10 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/productdetail/:productId" element={<ProducDetail />} />
               <Route path="/logout" element={<Logout />} />
-
-
-
+              <Route path="/products/hp" element={<ProductsByManufacturer manufacturerName="HP" />} />
+              <Route path="/products/dell" element={<ProductsByManufacturerDell manufacturerName="DELL" />} />
+              <Route path="/products/macbook" element={<ProductsByManufacturerMacbook manufacturerName="MACBOOK" />} />
+              <Route path="/products/lenovo" element={<ProductsByManufacturerLenovo manufacturerName="LENOVO" />} />
               {/* Các route được bảo vệ với PrivateRoute */}
               <Route
                 path="/order"

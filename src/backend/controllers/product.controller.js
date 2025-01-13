@@ -213,10 +213,34 @@ const getProductById = async (req, res) => {
     res.status(500).json({ message: 'Lỗi server', error: error.message });
   }
 };
+// Tìm sản phẩm theo hãng sản xuất
+const getProductsByManufacturer = async (req, res) => {
+  try {
+    const manufacturerName = req.params.manufacturerName;
+
+    // Tìm hãng sản xuất trong database theo tên
+    const manufacturer = await ManufacturerModel.findOne({ ten_hang_san_xuat: manufacturerName });
+
+    if (!manufacturer) {
+      return res.status(404).json({ message: 'Manufacturer not found' });
+    }
+
+    // Lấy tất cả sản phẩm của hãng sản xuất bằng cách tìm theo _id của hãng
+    const products = await ProductModel.find({ id_hang_san_xuat: manufacturer._id });
+
+    if (products.length === 0) {
+      return res.status(404).json({ message: 'No products found for this manufacturer' });
+    }
+
+    return res.status(200).json(products);
+  } catch (err) {
+    return res.status(500).json({ message: 'Server error', error: err.message });
+  }
+};
 
 
 
 
 
 
-module.exports = { getAllProducts, addProduct, updateProduct, deleteProduct, getProductsByCategory, searchProducts, getProductById};
+module.exports = { getAllProducts, addProduct, updateProduct, deleteProduct, getProductsByCategory, searchProducts, getProductById, getProductsByManufacturer };
