@@ -35,7 +35,7 @@ function Home() {
 
 
   const handleShowMacBooks = () => {
-    navigate('/products/apple'); // Navigate to the MacBook products page
+    navigate('/products/macbook'); // Navigate to the MacBook products page
   };
 
   return (
@@ -74,7 +74,7 @@ function Home() {
             onClick={handleShowMacBooks}
             className="px-4 py-2 border border-gray-300 text-white rounded transition-all duration-300 hover:shadow-lg hover:border-blue-500"
           >
-            <img src="/images/macbook.svg" alt="apple" />
+            <img src="/images/macbook.svg" alt="Macbook" />
           </button>
 
           <button
@@ -107,8 +107,7 @@ function Home() {
         <div className="product-categories mt-8">
           <ProductList categoryId="675bc20d6df648478e4756cf" title="Laptop văn phòng" />
           <ProductList categoryId="675cfe95fb5fc99bc8fafce7" title="Laptop gaming" />
-          <ProductList categoryId="675d0fe241cb03f8fcd34b77" title="Laptop mỏng nhẹ" />
-          
+          <ProductList categoryId="677bdda0653981e845aa3135" title="Laptop mỏng nhẹ" />
         </div>
       </div>
       <Footer />

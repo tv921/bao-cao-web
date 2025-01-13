@@ -71,7 +71,7 @@ const ProductsPage = () => {
               </div> 
 
               {/* Giá nằm ở dưới cùng */}
-              <div className="mt-auto text-lg font-bold text-green-600">Giá: {product.gia} VNĐ</div>
+              <div className="mt-auto text-lg font-bold text-green-600">Giá: {product.gia.toLocaleString()} VNĐ</div>
 
               <div className="mt-4 flex justify-between">
                 <button
