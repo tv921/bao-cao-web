@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 function Footer() {
   return (
-    <footer className="bg-gray-50 rounded-lg  shadow-lg text-gray-800 py-8">
+    <footer className="bg-gray-200 rounded-lg shadow-lg text-gray-800 py-8 mt-4">
       <div className="container mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {/* Logo and Description */}
         <div>
@@ -51,10 +51,11 @@ function Footer() {
       </div>
 
       {/* Copyright */}
-      <div className="mt-8 text-center text-sm text-black">
+      <div className="mt-6 text-center text-sm text-black">
         &copy; {new Date().getFullYear()} LAPTOP ABC. Tất cả các quyền được bảo lưu.
       </div>
     </footer>
+
   );
 }
 

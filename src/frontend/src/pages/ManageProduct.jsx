@@ -68,23 +68,7 @@ const ProductsPage = () => {
               <div className="mt-4">
                 <p><strong>Danh mục:</strong> {product.id_danh_muc?.ten_danh_muc}</p>
                 <p><strong>Hãng sản xuất:</strong> {product.id_hang_san_xuat?.ten_hang_san_xuat}</p>
-              </div>
-
-              {/* Kiểm tra sự tồn tại của cau_hinh trước khi hiển thị thông tin */}
-              {product.cau_hinh && (
-                <div className="cau-hinh mt-4">
-                  <p><strong>CPU:</strong> {product.cau_hinh.cpu}</p>
-                  <p><strong>RAM:</strong> {product.cau_hinh.ram}</p>
-                  <p><strong>Ổ cứng:</strong> {product.cau_hinh.o_cung}</p>
-                  <p><strong>GPU:</strong> {product.cau_hinh.gpu}</p>
-                  <p><strong>Màn hình:</strong> {product.cau_hinh.man_hinh}</p>
-                  <p><strong>Pin:</strong> {product.cau_hinh.pin}</p>
-                  <p><strong>Cổng kết nối:</strong> {product.cau_hinh.cong_ket_noi}</p>
-                  <p><strong>Hệ điều hành:</strong> {product.cau_hinh.he_dieu_hanh}</p>
-                  <p><strong>Trọng lượng:</strong> {product.cau_hinh.trong_luong}</p>
-                 
-                </div>
-              )}
+              </div> 
 
               {/* Giá nằm ở dưới cùng */}
               <div className="mt-auto text-lg font-bold text-green-600">Giá: {product.gia} VNĐ</div>

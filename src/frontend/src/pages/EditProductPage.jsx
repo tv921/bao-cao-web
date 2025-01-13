@@ -126,7 +126,7 @@ const EditProductPage = () => {
     axios.put(`http://localhost:5000/api/products/${id}`, data)
       .then((response) => {
         alert('Cập nhật sản phẩm thành công!');
-        navigate('/allproduct'); // Điều hướng về trang danh sách sản phẩm
+        navigate('/manage-product'); // Điều hướng về trang danh sách sản phẩm
       })
       .catch((err) => {
         setError('Lỗi khi cập nhật sản phẩm: ' + err.message);

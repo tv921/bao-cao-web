@@ -9,7 +9,8 @@ const {
   deleteProduct,
   getProductsByCategory,
   searchProducts,
-  getProductById
+  getProductById,
+  getProductsByManufacturer
 } = require("../controllers/product.controller");
 const router = express.Router();
 
@@ -45,5 +46,8 @@ router.delete("/:id", deleteProduct);
 
 // Lấy chi tiết sản phẩm theo ID
 router.get('/:id', getProductById);
+
+// Định nghĩa route lấy sản phẩm theo hãng sản xuất
+router.get('/manufacturer/:manufacturerName', getProductsByManufacturer); // Thêm dòng này
 
 module.exports = router;
