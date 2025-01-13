@@ -17,11 +17,10 @@ import Cart from './pages/cart';
 import ManageProduct from './pages/ManageProduct';
 import EditProductPage from "./pages/EditProductPage";
 import ManageUser from "./pages/ManageUser";
-import Orders from "./pages/Order";
+import Orders from './pages/Order';
 import PrivateRoute from "./components/PrivateRoute";
 import ManageOrder from "./pages/ManageOrder";
 import Logout from './pages/Logout';
-
 
 function App() {
   // State để theo dõi trạng thái đăng nhập và vai trò người dùng
@@ -69,15 +68,17 @@ function App() {
   return (
     <Router>
       <div className="flex min-h-screen">
-      {isLoggedIn && userRole === "admin" && <Sidebar />} {/* Sidebar chỉ hiển thị nếu người dùng là admin */}
+        {isLoggedIn && userRole === "admin" && <Sidebar />} {/* Sidebar chỉ hiển thị nếu người dùng là admin */}
 
         {/* Main Content */}
         <div className="flex-1 flex flex-col ml-84">
-        {isLoggedIn ? (
+          {isLoggedIn ? (
             <Navbar1 onLogout={handleLogout} />
           ) : (
             <Navbar />
           )}
+
+
           <div className="flex-1 p-6 bg-gray-100">
             <Routes>
               {/* Public Routes */}
@@ -88,8 +89,6 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/productdetail/:productId" element={<ProducDetail />} />
               <Route path="/logout" element={<Logout />} />
-
-
 
               {/* Các route được bảo vệ với PrivateRoute */}
               <Route
@@ -165,3 +164,4 @@ function App() {
 }
 
 export default App;
+
