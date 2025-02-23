@@ -25,7 +25,7 @@ router.get('/', cartController.getAllCarts);
 
 /**
  * @swagger
- * /api/carts/{userId}:
+ * /api/carts/{id_nguoi_dung}:
  *   get:
  *     tags:
  *       - Carts
@@ -33,7 +33,7 @@ router.get('/', cartController.getAllCarts);
  *     description: Trả về thông tin giỏ hàng của người dùng dựa trên ID người dùng.
  *     parameters:
  *       - in: path
- *         name: userId
+ *         name: id_nguoi_dung
  *         required: true
  *         description: ID của người dùng
  *         schema:
@@ -44,7 +44,7 @@ router.get('/', cartController.getAllCarts);
  *       404:
  *         description: Không tìm thấy giỏ hàng
  */
-router.get('/:userId', cartController.getCartByUserId);
+router.get('/:id_nguoi_dung', cartController.getCartByUserId);
 
 /**
  * @swagger
@@ -61,13 +61,13 @@ router.get('/:userId', cartController.getCartByUserId);
  *           schema:
  *             type: object
  *             properties:
- *               userId:
+ *               id_nguoi_dung:
  *                 type: string
  *                 description: ID của người dùng
- *               productId:
+ *               id_san_pham:
  *                 type: string
  *                 description: ID của sản phẩm
- *               quantity:
+ *               so_luong:
  *                 type: number
  *                 description: Số lượng sản phẩm
  *     responses:
@@ -80,7 +80,7 @@ router.post('/add', cartController.addToCart);
 
 /**
  * @swagger
- * /api/carts/remove/{userId}/{productId}:
+ * /api/carts/remove/{id_nguoi_dung}/{id_san_pham}:
  *   delete:
  *     tags:
  *       - Carts
@@ -88,13 +88,13 @@ router.post('/add', cartController.addToCart);
  *     description: Xóa một sản phẩm khỏi giỏ hàng của người dùng dựa trên ID người dùng và ID sản phẩm.
  *     parameters:
  *       - in: path
- *         name: userId
+ *         name: id_nguoi_dung
  *         required: true
  *         description: ID của người dùng
  *         schema:
  *           type: string
  *       - in: path
- *         name: productId
+ *         name: id_san_pham
  *         required: true
  *         description: ID của sản phẩm
  *         schema:
@@ -105,6 +105,6 @@ router.post('/add', cartController.addToCart);
  *       404:
  *         description: Không tìm thấy giỏ hàng hoặc sản phẩm
  */
-router.delete('/remove/:userId/:productId', cartController.removeItem);
+router.delete('/remove/:id_nguoi_dung/:id_san_pham', cartController.removeItem);
 
 module.exports = router;

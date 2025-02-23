@@ -44,10 +44,10 @@ router.get('/', getAllManufacturers);
  *           schema:
  *             type: object
  *             properties:
- *               name:
+ *               ten_hang_san_xuat:
  *                 type: string
  *                 description: Tên nhà sản xuất
- *               description:
+ *               mo_ta:
  *                 type: string
  *                 description: Mô tả nhà sản xuất
  *     responses:
@@ -80,10 +80,10 @@ router.post('/', addManufacturer);
  *           schema:
  *             type: object
  *             properties:
- *               name:
+ *               ten_hang_san_xuat:
  *                 type: string
  *                 description: Tên mới của nhà sản xuất
- *               description:
+ *               mo_ta:
  *                 type: string
  *                 description: Mô tả mới của nhà sản xuất
  *     responses:

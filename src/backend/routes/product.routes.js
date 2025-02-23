@@ -111,21 +111,65 @@ router.get("/", getAllProducts);
  *         type: file
  *         description: Ảnh của sản phẩm.
  *       - in: formData
- *         name: name
+ *         name: ten_san_pham
  *         type: string
  *         description: Tên sản phẩm.
  *       - in: formData
- *         name: price
+ *         name: gia
  *         type: number
  *         description: Giá sản phẩm.
  *       - in: formData
- *         name: categoryId
+ *         name: id_danh_muc
  *         type: string
  *         description: ID danh mục sản phẩm.
  *       - in: formData
- *         name: manufacturer
+ *         name: id_hang_san_xuat
  *         type: string
- *         description: Hãng sản xuất.
+ *         description: ID hãng sản xuất.
+ *       - in: formData
+ *         name: mo_ta
+ *         type: string
+ *         description: Mô tả sản phẩm.
+ *       - in: formData
+ *         name: trang_thai
+ *         type: string
+ *         description: Trạng thái sản phẩm.
+ *       - in: formData
+ *         name: cau_hinh[cpu]
+ *         type: string
+ *         description: CPU của sản phẩm.
+ *       - in: formData
+ *         name: cau_hinh[ram]
+ *         type: string
+ *         description: RAM của sản phẩm.
+ *       - in: formData
+ *         name: cau_hinh[o_cung]
+ *         type: string
+ *         description: Ổ cứng của sản phẩm.
+ *       - in: formData
+ *         name: cau_hinh[gpu]
+ *         type: string
+ *         description: GPU của sản phẩm.
+ *       - in: formData
+ *         name: cau_hinh[man_hinh]
+ *         type: string
+ *         description: Màn hình của sản phẩm.
+ *       - in: formData
+ *         name: cau_hinh[pin]
+ *         type: string
+ *         description: Pin của sản phẩm.
+ *       - in: formData
+ *         name: cau_hinh[cong_ket_noi]
+ *         type: string
+ *         description: Cổng kết nối của sản phẩm.
+ *       - in: formData
+ *         name: cau_hinh[he_dieu_hanh]
+ *         type: string
+ *         description: Hệ điều hành của sản phẩm.
+ *       - in: formData
+ *         name: cau_hinh[trong_luong]
+ *         type: string
+ *         description: Trọng lượng của sản phẩm.
  *     responses:
  *       201:
  *         description: Sản phẩm đã được thêm thành công
@@ -156,21 +200,65 @@ router.post("/", upload.any(), addProduct);
  *         type: file
  *         description: Ảnh mới của sản phẩm.
  *       - in: formData
- *         name: name
+ *         name: ten_san_pham
  *         type: string
  *         description: Tên mới của sản phẩm.
  *       - in: formData
- *         name: price
+ *         name: gia
  *         type: number
  *         description: Giá mới của sản phẩm.
  *       - in: formData
- *         name: categoryId
+ *         name: id_danh_muc
  *         type: string
  *         description: ID danh mục mới của sản phẩm.
  *       - in: formData
- *         name: manufacturer
+ *         name: id_hang_san_xuat
  *         type: string
- *         description: Hãng sản xuất mới.
+ *         description: ID hãng sản xuất mới.
+ *       - in: formData
+ *         name: mo_ta
+ *         type: string
+ *         description: Mô tả mới của sản phẩm.
+ *       - in: formData
+ *         name: trang_thai
+ *         type: string
+ *         description: Trạng thái mới của sản phẩm.
+ *       - in: formData
+ *         name: cau_hinh[cpu]
+ *         type: string
+ *         description: CPU mới của sản phẩm.
+ *       - in: formData
+ *         name: cau_hinh[ram]
+ *         type: string
+ *         description: RAM mới của sản phẩm.
+ *       - in: formData
+ *         name: cau_hinh[o_cung]
+ *         type: string
+ *         description: Ổ cứng mới của sản phẩm.
+ *       - in: formData
+ *         name: cau_hinh[gpu]
+ *         type: string
+ *         description: GPU mới của sản phẩm.
+ *       - in: formData
+ *         name: cau_hinh[man_hinh]
+ *         type: string
+ *         description: Màn hình mới của sản phẩm.
+ *       - in: formData
+ *         name: cau_hinh[pin]
+ *         type: string
+ *         description: Pin mới của sản phẩm.
+ *       - in: formData
+ *         name: cau_hinh[cong_ket_noi]
+ *         type: string
+ *         description: Cổng kết nối mới của sản phẩm.
+ *       - in: formData
+ *         name: cau_hinh[he_dieu_hanh]
+ *         type: string
+ *         description: Hệ điều hành mới của sản phẩm.
+ *       - in: formData
+ *         name: cau_hinh[trong_luong]
+ *         type: string
+ *         description: Trọng lượng mới của sản phẩm.
  *     responses:
  *       200:
  *         description: Sản phẩm đã được cập nhật thành công

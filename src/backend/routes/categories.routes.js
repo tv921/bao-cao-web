@@ -44,10 +44,10 @@ router.get('/', getAllCategories);
  *           schema:
  *             type: object
  *             properties:
- *               name:
+ *               ten_danh_muc:
  *                 type: string
  *                 description: Tên danh mục
- *               description:
+ *               mo_ta:
  *                 type: string
  *                 description: Mô tả danh mục
  *     responses:
@@ -80,10 +80,10 @@ router.post('/', addCategory);
  *           schema:
  *             type: object
  *             properties:
- *               name:
+ *               ten_danh_muc:
  *                 type: string
  *                 description: Tên mới của danh mục
- *               description:
+ *               mo_ta:
  *                 type: string
  *                 description: Mô tả mới của danh mục
  *     responses:

@@ -26,14 +26,7 @@ const authenticateUser = require('../middlewares/authenticateUser');
  *             schema:
  *               type: array
  *               items:
- *                 type: object
- *                 properties:
- *                   id:
- *                     type: integer
- *                     example: 1
- *                   name:
- *                     type: string
- *                     example: "Nguyễn Văn A"
+ *                 $ref: '#/components/schemas/User'
  */
 router.get("/", userController.getAllUsers);
 
@@ -50,14 +43,7 @@ router.get("/", userController.getAllUsers);
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               username:
- *                 type: string
- *                 example: "user123"
- *               password:
- *                 type: string
- *                 example: "password123"
+ *             $ref: '#/components/schemas/User'
  *     responses:
  *       201:
  *         description: Đăng ký thành công
@@ -81,10 +67,10 @@ router.post("/register", userController.registerUser);
  *           schema:
  *             type: object
  *             properties:
- *               username:
+ *               ten_dang_nhap:
  *                 type: string
  *                 example: "user123"
- *               password:
+ *               mat_khau:
  *                 type: string
  *                 example: "password123"
  *     responses:
@@ -108,6 +94,10 @@ router.post("/login", userController.loginUser);
  *     responses:
  *       200:
  *         description: Thành công
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
  *       401:
  *         description: Không có quyền truy cập
  */
@@ -144,9 +134,18 @@ router.post("/logout", userController.logoutUser);
  *           schema:
  *             type: object
  *             properties:
- *               name:
+ *               ten_dang_nhap:
  *                 type: string
- *                 example: "Nguyễn Văn B"
+ *                 example: "user123"
+ *               email:
+ *                 type: string
+ *                 example: "user123@example.com"
+ *               sdt:
+ *                 type: string
+ *                 example: "0123456789"
+ *               dia_chi:
+ *                 type: string
+ *                 example: "123 Đường ABC"
  *     responses:
  *       200:
  *         description: Cập nhật thành công

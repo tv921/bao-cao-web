@@ -47,18 +47,24 @@ router.get('/', getAllOrders);
  *           schema:
  *             type: object
  *             properties:
- *               userId:
+ *               id_nguoi_dung:
  *                 type: string
  *                 description: ID của người dùng
- *               items:
+ *               san_pham:
  *                 type: array
  *                 items:
  *                   type: object
  *                   properties:
- *                     productId:
+ *                     id_san_pham:
  *                       type: string
- *                     quantity:
+ *                     so_luong:
  *                       type: number
+ *                     gia:
+ *                       type: number
+ *               tong_tien:
+ *                 type: number
+ *               phuong_thuc_thanh_toan:
+ *                 type: string
  *     responses:
  *       201:
  *         description: Đơn hàng đã được tạo thành công
@@ -89,17 +95,23 @@ router.post('/', createOrder);
  *           schema:
  *             type: object
  *             properties:
- *               userId:
+ *               id_nguoi_dung:
  *                 type: string
- *               items:
+ *               san_pham:
  *                 type: array
  *                 items:
  *                   type: object
  *                   properties:
- *                     productId:
+ *                     id_san_pham:
  *                       type: string
- *                     quantity:
+ *                     so_luong:
  *                       type: number
+ *                     gia:
+ *                       type: number
+ *               tong_tien:
+ *                 type: number
+ *               phuong_thuc_thanh_toan:
+ *                 type: string
  *     responses:
  *       200:
  *         description: Đơn hàng đã được cập nhật thành công
@@ -133,7 +145,7 @@ router.delete('/:id', deleteOrder);
 
 /**
  * @swagger
- * /api/orders/checkout/{userId}:
+ * /api/orders/checkout/{id_nguoi_dung}:
  *   post:
  *     tags:
  *       - Orders
@@ -141,7 +153,7 @@ router.delete('/:id', deleteOrder);
  *     description: Thanh toán đơn hàng của người dùng dựa trên ID người dùng.
  *     parameters:
  *       - in: path
- *         name: userId
+ *         name: id_nguoi_dung
  *         required: true
  *         description: ID của người dùng
  *         schema:
@@ -152,11 +164,11 @@ router.delete('/:id', deleteOrder);
  *       404:
  *         description: Không tìm thấy đơn hàng hoặc người dùng
  */
-router.post('/checkout/:userId', checkoutOrder);
+router.post('/checkout/:id_nguoi_dung', checkoutOrder);
 
 /**
  * @swagger
- * /api/orders/{userId}:
+ * /api/orders/{id_nguoi_dung}:
  *   get:
  *     tags:
  *       - Orders
@@ -164,7 +176,7 @@ router.post('/checkout/:userId', checkoutOrder);
  *     description: Trả về thông tin đơn hàng của người dùng dựa trên ID người dùng.
  *     parameters:
  *       - in: path
- *         name: userId
+ *         name: id_nguoi_dung
  *         required: true
  *         description: ID của người dùng
  *         schema:
@@ -175,11 +187,11 @@ router.post('/checkout/:userId', checkoutOrder);
  *       404:
  *         description: Không tìm thấy đơn hàng
  */
-router.get('/:userId', getOrderById);
+router.get('/:id_nguoi_dung', getOrderById);
 
 /**
  * @swagger
- * /api/orders/approve/{orderId}:
+ * /api/orders/approve/{id}:
  *   put:
  *     tags:
  *       - Orders
@@ -187,7 +199,7 @@ router.get('/:userId', getOrderById);
  *     description: Phê duyệt một đơn hàng dựa trên ID đơn hàng.
  *     parameters:
  *       - in: path
- *         name: orderId
+ *         name: id
  *         required: true
  *         description: ID của đơn hàng cần phê duyệt
  *         schema:
@@ -198,6 +210,6 @@ router.get('/:userId', getOrderById);
  *       404:
  *         description: Không tìm thấy đơn hàng
  */
-router.put('/approve/:orderId', approveOrder);
+router.put('/approve/:id', approveOrder);
 
 module.exports = router;
