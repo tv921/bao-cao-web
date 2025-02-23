@@ -12,11 +12,29 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const order = require("./models/order.model");
 
+const swaggerJsdoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
+
 const dotenv = require("dotenv");
 
 const payOS = require("./utils/payos");
 
 const app = express();
+
+// Cấu hình Swagger
+const swaggerOptions = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Laptop Store API",
+      version: "1.0.0",
+      description: "Tài liệu API cho hệ thống quản lý cửa hàng laptop",
+    },
+  },
+  apis: ["./routes/*.routes.js"], // Chỉ định đường dẫn đến các file chứa JSDoc
+};
+const swaggerDocs = swaggerJsdoc(swaggerOptions);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Middleware
 app.use(cors()); // Cho phép tất cả các nguồn yêu cầu
@@ -88,4 +106,5 @@ app.post("/create-payment-link", async (req, res) => {
 const port = 5000; // Thay giá trị này nếu cần
 app.listen(port, () => {
   console.log(`Server đang chạy tại http://localhost:${port}`);
+  console.log(`Swagger UI: http://localhost:${port}/api-docs`);
 });

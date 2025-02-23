@@ -3,25 +3,179 @@ const router = express.Router();
 const userController = require("../controllers/users.controller");
 const authenticateUser = require('../middlewares/authenticateUser');
 
-// Route để lấy tất cả người dùng
+/**
+ * @swagger
+ * tags:
+ *   name: Users
+ *   description: Quản lý người dùng
+ */
+
+/**
+ * @swagger
+ * /api/users:
+ *   get:
+ *     tags:
+ *       - Users
+ *     summary: Lấy tất cả người dùng
+ *     description: Trả về danh sách tất cả người dùng
+ *     responses:
+ *       200:
+ *         description: Thành công
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                     example: 1
+ *                   name:
+ *                     type: string
+ *                     example: "Nguyễn Văn A"
+ */
 router.get("/", userController.getAllUsers);
 
-// Route để đăng ký người dùng mới
-router.post("/register", userController.registerUser);  // Thêm route đăng ký
+/**
+ * @swagger
+ * /api/users/register:
+ *   post:
+ *     tags:
+ *       - Users
+ *     summary: Đăng ký người dùng mới
+ *     description: API để đăng ký tài khoản mới
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 example: "user123"
+ *               password:
+ *                 type: string
+ *                 example: "password123"
+ *     responses:
+ *       201:
+ *         description: Đăng ký thành công
+ *       400:
+ *         description: Dữ liệu không hợp lệ
+ */
+router.post("/register", userController.registerUser);
 
-// Route để đăng nhập người dùng
-router.post("/login", userController.loginUser);  // Thêm route đăng nhập
+/**
+ * @swagger
+ * /api/users/login:
+ *   post:
+ *     tags:
+ *       - Users
+ *     summary: Đăng nhập
+ *     description: Người dùng đăng nhập vào hệ thống
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 example: "user123"
+ *               password:
+ *                 type: string
+ *                 example: "password123"
+ *     responses:
+ *       200:
+ *         description: Đăng nhập thành công
+ *       401:
+ *         description: Sai tài khoản hoặc mật khẩu
+ */
+router.post("/login", userController.loginUser);
 
-// Route để lấy thông tin người dùng (sử dụng token)
-router.get("/user-info", userController.getUserInfo);  // Đảm bảo sử dụng token để lấy thông tin người dùng
+/**
+ * @swagger
+ * /api/users/user-info:
+ *   get:
+ *     tags:
+ *       - Users
+ *     summary: Lấy thông tin người dùng
+ *     description: Trả về thông tin cá nhân của người dùng (cần token)
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Thành công
+ *       401:
+ *         description: Không có quyền truy cập
+ */
+router.get("/user-info", authenticateUser, userController.getUserInfo);
 
-// Route để đăng xuất người dùng
-router.post("/logout", userController.logoutUser);  // Thêm route đăng xuất
+/**
+ * @swagger
+ * /api/users/logout:
+ *   post:
+ *     tags:
+ *       - Users
+ *     summary: Đăng xuất người dùng
+ *     description: Đăng xuất tài khoản và hủy token
+ *     responses:
+ *       200:
+ *         description: Đăng xuất thành công
+ */
+router.post("/logout", userController.logoutUser);
 
-// Route để cập nhật thông tin người dùng
-router.put("/user-info", userController.updateUserInfo);  // Cập nhật thông tin người dùng, không cần id trong URL vì thông tin đã có trong token
+/**
+ * @swagger
+ * /api/users/user-info:
+ *   put:
+ *     tags:
+ *       - Users
+ *     summary: Cập nhật thông tin người dùng
+ *     description: Cập nhật thông tin cá nhân của người dùng (cần token)
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: "Nguyễn Văn B"
+ *     responses:
+ *       200:
+ *         description: Cập nhật thành công
+ *       400:
+ *         description: Dữ liệu không hợp lệ
+ */
+router.put("/user-info", authenticateUser, userController.updateUserInfo);
 
-// Route để xóa người dùng (chỉ dành cho admin)
-router.delete("/:id", userController.deleteUser);  // Đảm bảo chỉ admin mới có quyền xóa người dùng
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   delete:
+ *     tags:
+ *       - Users
+ *     summary: Xóa người dùng (chỉ dành cho admin)
+ *     description: Xóa một người dùng theo ID (chỉ admin có quyền thực hiện)
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         example: 1
+ *     responses:
+ *       200:
+ *         description: Xóa thành công
+ *       403:
+ *         description: Không có quyền thực hiện
+ */
+router.delete("/:id", userController.deleteUser);
 
 module.exports = router;
