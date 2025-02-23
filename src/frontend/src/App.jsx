@@ -99,7 +99,7 @@ function App() {
 
               <Route path="/products/hp" element={<ProductsByManufacturer manufacturerName="HP" />} />
               <Route path="/products/dell" element={<ProductsByManufacturerDell manufacturerName="Dell" />} />
-              <Route path="/products/apple" element={<ProductsByManufacturerMacbook manufacturerName="Macbook" />} />
+              <Route path="/products/macbook" element={<ProductsByManufacturerMacbook manufacturerName="Apple" />} />
               <Route path="/products/lenovo" element={<ProductsByManufacturerLenovo manufacturerName="Lenovo" />} />
               <Route path="/products/asus" element={<ProductsByManufacturerAsus manufacturerName="Asus" />} />
               <Route path="/products/acer" element={<ProductsByManufacturerAcer manufacturerName="Acer" />} />

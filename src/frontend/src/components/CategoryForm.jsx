@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const CategoryForm = ({ onSubmit, category }) => {
-  const [tenDanhMuc, setTenDanhMuc] = useState(category ? category.ten_danh_muc : '');
-  const [moTa, setMoTa] = useState(category ? category.mo_ta : '');
+  const [tenDanhMuc, setTenDanhMuc] = useState('');
+  const [moTa, setMoTa] = useState('');
+
+  useEffect(() => {
+    if (category) {
+      setTenDanhMuc(category.ten_danh_muc);
+      setMoTa(category.mo_ta);
+    }
+  }, [category]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

@@ -84,15 +84,16 @@ const ManageOrder = () => {
                 Trạng thái đơn hàng:
               </label>
               <select
-                value={order.trang_thai} 
-                onChange={(e) => handleStatusChange(order._id, e.target.value)} 
+                value={order.trang_thai}
+                onChange={(e) => handleStatusChange(order._id, e.target.value)}
                 className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+                disabled={order.trang_thai === 'Đã giao' || order.trang_thai === 'Hủy'} // Khóa khi trạng thái là "Đã giao" hoặc "Hủy"
               >
                 <option value="Đang xử lý">Đang xử lý</option>
                 <option value="Đã giao">Đã giao</option>
                 <option value="Hủy">Hủy</option>
               </select>
-              </div> 
+            </div>
             </div>
           ))}
         </div>
